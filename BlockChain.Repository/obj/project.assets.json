@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "FluentValidation/11.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/FluentValidation.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.5.0": {
         "type": "package",
         "compile": {
@@ -597,10 +606,58 @@
             "rid": "win"
           }
         }
+      },
+      "BlockChain.Cross/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.8"
+        },
+        "compile": {
+          "bin/placeholder/BlockChain.Cross.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BlockChain.Cross.dll": {}
+        }
+      },
+      "BlockChain.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BlockChain.Cross": "1.0.0",
+          "FluentValidation": "11.2.0"
+        },
+        "compile": {
+          "bin/placeholder/BlockChain.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BlockChain.Domain.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "FluentValidation/11.2.0": {
+      "sha512": "KV1YBM8T4plLKmShjxfmHMF6X1lDuXgyqE+t8NYNxb7jmMbPnA3u30RsuXAf2NYMv0TBCUQguI2Z6W17c/Dh1A==",
+      "type": "package",
+      "path": "fluentvalidation/11.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.11.2.0.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net5.0/FluentValidation.dll",
+        "lib/net5.0/FluentValidation.xml",
+        "lib/net6.0/FluentValidation.dll",
+        "lib/net6.0/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml",
+        "lib/netstandard2.1/FluentValidation.dll",
+        "lib/netstandard2.1/FluentValidation.xml"
+      ]
+    },
     "Microsoft.CSharp/4.5.0": {
       "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
       "type": "package",
@@ -1762,10 +1819,21 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "BlockChain.Cross/1.0.0": {
+      "type": "project",
+      "path": "../BlockChain.Cross/BlockChain.Cross.csproj",
+      "msbuildProject": "../BlockChain.Cross/BlockChain.Cross.csproj"
+    },
+    "BlockChain.Domain/1.0.0": {
+      "type": "project",
+      "path": "../BlockChain.Domain/BlockChain.Domain.csproj",
+      "msbuildProject": "../BlockChain.Domain/BlockChain.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "BlockChain.Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 6.0.8",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.8"
     ]
@@ -1801,7 +1869,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\leona\\source\\repos\\BlockChain\\BlockChain.Domain\\BlockChain.Domain.csproj": {
+              "projectPath": "C:\\Users\\leona\\source\\repos\\BlockChain\\BlockChain.Domain\\BlockChain.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

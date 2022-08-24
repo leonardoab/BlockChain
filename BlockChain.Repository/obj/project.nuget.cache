@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "uX2aFBUasqQp4I1S852emGBsxnfCf+Q3hDzOYd9aEHTdr4Of7PpyDGyb9SdPRJqdLqZExqQ6F9bsNp5npyFPbQ==",
+  "dgSpecHash": "mDVgddU9IMiYos5Gu4nvfRup0zicJMZ8fpJyx1ZWhzZZBSQ6tbvMPymknjP5QKMxM5lOS/KnUuEwkHDQSF2xmQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\leona\\source\\repos\\BlockChain\\BlockChain.Repository\\BlockChain.Repository.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\leona\\.nuget\\packages\\fluentvalidation\\11.2.0\\fluentvalidation.11.2.0.nupkg.sha512",
     "C:\\Users\\leona\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\leona\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\leona\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
