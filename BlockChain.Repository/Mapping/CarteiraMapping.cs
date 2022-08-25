@@ -22,8 +22,10 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.NumeroTransacoes);
             builder.Property(x => x.DataVerificacao);
             builder.Property(x => x.Rank);
-            builder.Property(x => x.Empresa).HasMaxLength(1);
+            builder.Property(x => x.TipoCarteira);
 
+            builder.HasMany(x => x.Transacoes).WithOne();
+            builder.HasMany(x => x.Historicos).WithOne();
         }
     }
 }

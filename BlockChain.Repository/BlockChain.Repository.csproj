@@ -15,4 +15,8 @@
     <ProjectReference Include="..\BlockChain.Domain\BlockChain.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

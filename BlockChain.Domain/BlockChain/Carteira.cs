@@ -14,7 +14,8 @@ namespace BlockChain.Domain.BlockChain
         public int NumeroTransacoes { get; set; }
         public DateTime DataVerificacao { get; set; }
         public int Rank { get; set; }
-        public string Empresa { get; set; }
-
+        public string TipoCarteira { get; set; }
+        public IList<Historico> Historicos { get; set; }
+        public IList<Transacao> Transacoes { get; set; }
     }
 }

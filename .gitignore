@@ -2,4 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/BlockChain.Api/bin/Debug/net6.0
+*/bin/*
+*/obj/*
+*/vs/*

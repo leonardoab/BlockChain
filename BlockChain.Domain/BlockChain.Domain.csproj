@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="BlockChain\ValueObject\" />
     <Folder Include="BlockChain\Rules\" />
-    <Folder Include="BlockChain\Repository\" />
   </ItemGroup>
 
   <ItemGroup>
