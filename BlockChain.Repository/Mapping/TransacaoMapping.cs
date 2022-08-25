@@ -22,11 +22,11 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.TipoTransacao);
             builder.Property(x => x.CodigoTransacao);
 
-            builder.OwnsOne(x => x.CarteiraDestino, p => { p.Property(f => f.Saldo).HasColumnName("SaldoDestino").IsRequired(); });
-            builder.OwnsOne(x => x.CarteiraDestino, p => { p.Property(f => f.CodigoCarteira).HasColumnName("CodigoCarteiraDestino").IsRequired(); });
+            builder.Property(x => x.Saldo);
+            builder.Property(x => x.CodigoCarteiraDestino);
+            builder.Property(x => x.CodigoCarteiraOrigem);
 
-            builder.OwnsOne(x => x.CarteiraOrigem, p => { p.Property(f => f.Saldo).HasColumnName("SaldoOrigem").IsRequired(); });
-            builder.OwnsOne(x => x.CarteiraOrigem, p => { p.Property(f => f.CodigoCarteira).HasColumnName("CodigoCarteiraOrigem").IsRequired(); });
+            
 
 
 

@@ -17,10 +17,12 @@ namespace BlockChain.Repository.Mapping
             builder.ToTable("Historicos");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.DataHistorico);            
-            builder.OwnsOne(x => x.HistoricoCarteira, p => { p.Property(f => f.Saldo).HasColumnName("Saldo").IsRequired(); });
-            builder.OwnsOne(x => x.HistoricoCarteira, p => { p.Property(f => f.CodigoCarteira).HasColumnName("CodigoCarteira").IsRequired(); });
-            builder.OwnsOne(x => x.HistoricoCarteira, p => { p.Property(f => f.NumeroTransacoes).HasColumnName("NumeroTransacoes").IsRequired(); });
+            builder.Property(x => x.DataHistorico);
+
+            builder.Property(x => x.Saldo);
+            builder.Property(x => x.CodigoCarteira);
+            builder.Property(x => x.NumeroTransacoes);
+
 
 
 
