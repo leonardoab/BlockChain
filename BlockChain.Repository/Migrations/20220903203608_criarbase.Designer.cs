@@ -4,6 +4,7 @@ using BlockChain.Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlockChain.Repository.Migrations
 {
     [DbContext(typeof(BlockChainContext))]
-    partial class BlockChainContextModelSnapshot : ModelSnapshot
+    [Migration("20220903203608_criarbase")]
+    partial class criarbase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,24 +167,6 @@ namespace BlockChain.Repository.Migrations
 
             modelBuilder.Entity("BlockChain.Domain.BlockChain.Usuario", b =>
                 {
-                    b.OwnsOne("BlockChain.Domain.BlockChain.ValueObject.Email", "Email", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Valor")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Email");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("Usuarios");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UsuarioId");
-                        });
-
                     b.OwnsOne("BlockChain.Domain.BlockChain.ValueObject.Password", "Password", b1 =>
                         {
                             b1.Property<Guid>("UsuarioId")
@@ -200,9 +184,6 @@ namespace BlockChain.Repository.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UsuarioId");
                         });
-
-                    b.Navigation("Email")
-                        .IsRequired();
 
                     b.Navigation("Password")
                         .IsRequired();

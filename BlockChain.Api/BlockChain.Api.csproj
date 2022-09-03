@@ -20,8 +20,4 @@
     <ProjectReference Include="..\BlockChain.Repository\BlockChain.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 namespace BlockChain.Domain.BlockChain.ValueObject
 {
     public class Email
-    {       
+    {
+        public Email()
+        {
+        }
 
         public Email(string email)
         {
