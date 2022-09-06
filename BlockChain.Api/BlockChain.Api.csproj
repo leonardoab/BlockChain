@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlockChain.Application\BlockChain.Application.csproj" />
     <ProjectReference Include="..\BlockChain.Repository\BlockChain.Repository.csproj" />
   </ItemGroup>
 

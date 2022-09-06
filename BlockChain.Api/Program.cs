@@ -1,3 +1,4 @@
+using BlockChain.Application;
 using BlockChain.Repository;
 using BlockChain.Repository.Context;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services       
+builder.Services
+       .RegisterApplication()
        .RegisterRepository(builder.Configuration.GetConnectionString("BlockChain"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
