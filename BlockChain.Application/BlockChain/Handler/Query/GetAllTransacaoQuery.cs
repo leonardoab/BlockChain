@@ -15,11 +15,11 @@ namespace BlockChain.Application.BlockChain.Handler.Query
 
     public class GetAllTransacaoQueryResponse
     {
-        public IList<TransacaoOutputDto> Playlists { get; set; }
+        public IList<TransacaoOutputDto> Transacoes { get; set; }
 
-        public GetAllTransacaoQueryResponse(IList<TransacaoOutputDto> playlists)
+        public GetAllTransacaoQueryResponse(IList<TransacaoOutputDto> transacoes)
         {
-            Playlists = playlists;
+            Transacoes = transacoes;
         }
     }
 }

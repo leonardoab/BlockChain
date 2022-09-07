@@ -15,11 +15,11 @@ namespace BlockChain.Application.BlockChain.Handler.Query
 
     public class GetAllHistoricoQueryResponse
     {
-        public IList<HistoricoOutputDto> Playlists { get; set; }
+        public IList<HistoricoOutputDto> Historicos { get; set; }
 
-        public GetAllHistoricoQueryResponse(IList<HistoricoOutputDto> playlists)
+        public GetAllHistoricoQueryResponse(IList<HistoricoOutputDto> historicos)
         {
-            Playlists = playlists;
+            Historicos = historicos;
         }
     }
 }

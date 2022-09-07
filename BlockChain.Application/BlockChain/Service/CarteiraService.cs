@@ -11,12 +11,12 @@ namespace BlockChain.Application.BlockChain.Service
 {
     public class CarteiraService : ICarteiraService
     {
-        private readonly ICarteiraRepository playlistRepository;
+        private readonly ICarteiraRepository carteiraRepository;
         private readonly IMapper mapper;
 
         public CarteiraService(ICarteiraRepository CarteiraRepository, IMapper mapper)
         {
-            this.playlistRepository = CarteiraRepository;
+            this.carteiraRepository = CarteiraRepository;
             this.mapper = mapper;
         }
 
@@ -24,7 +24,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Carteira = this.mapper.Map<Domain.BlockChain.Carteira>(dto);
 
-            await this.playlistRepository.Save(Carteira);
+            await this.carteiraRepository.Save(Carteira);
 
             return this.mapper.Map<CarteiraOutputDto>(Carteira);
 
@@ -34,7 +34,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Carteira = this.mapper.Map<Domain.BlockChain.Carteira>(dto);
 
-            await this.playlistRepository.Delete(Carteira);
+            await this.carteiraRepository.Delete(Carteira);
 
             return this.mapper.Map<CarteiraOutputDto>(Carteira);
 
@@ -44,7 +44,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Carteira = this.mapper.Map<Domain.BlockChain.Carteira>(dto);
 
-            await this.playlistRepository.Update(Carteira);
+            await this.carteiraRepository.Update(Carteira);
 
             return this.mapper.Map<CarteiraOutputDto>(Carteira);
 
@@ -53,7 +53,7 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<CarteiraOutputDto>> ObterTodos()
         {
-            var Carteira = await this.playlistRepository.GetAll();
+            var Carteira = await this.carteiraRepository.GetAll();
 
             return this.mapper.Map<List<CarteiraOutputDto>>(Carteira);
         }

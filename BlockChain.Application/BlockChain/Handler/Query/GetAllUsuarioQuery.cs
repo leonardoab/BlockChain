@@ -15,11 +15,11 @@ namespace BlockChain.Application.BlockChain.Handler.Query
 
     public class GetAllUsuarioQueryResponse
     {
-        public IList<UsuarioOutputDto> Playlists { get; set; }
+        public IList<UsuarioOutputDto> Usuarios { get; set; }
 
-        public GetAllUsuarioQueryResponse(IList<UsuarioOutputDto> playlists)
+        public GetAllUsuarioQueryResponse(IList<UsuarioOutputDto> usuarios)
         {
-            Playlists = playlists;
+            Usuarios = usuarios;
         }
     }
 }
