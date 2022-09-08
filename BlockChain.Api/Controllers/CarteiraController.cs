@@ -1,6 +1,7 @@
 ﻿using BlockChain.Application.BlockChain.Dto;
 using BlockChain.Application.BlockChain.Handler.Command;
 using BlockChain.Application.BlockChain.Handler.Query;
+using BlockChain.Application.BlockChain.Service;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,20 @@ namespace BlockChain.Api.Controllers
     public class CarteiraController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly ICarteiraService carteiraService;
 
-        public CarteiraController(IMediator mediator)
+        public CarteiraController(IMediator mediator, ICarteiraService carteiraService)
         {
             this.mediator = mediator;
+            this.carteiraService = carteiraService;
+        }
+
+        [HttpGet]
+        [Route("AtualizarSaldosCarteiras")]
+        public async Task<IActionResult> AtualizarSaldosCarteiras()
+        {
+            return Ok(await this.carteiraService.BuscarSaldosCarteiras());            
+
         }
 
         [HttpGet]

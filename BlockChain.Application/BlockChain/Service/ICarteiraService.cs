@@ -1,4 +1,5 @@
 ﻿using BlockChain.Application.BlockChain.Dto;
+using BlockChain.Domain.BlockChain;
 
 namespace BlockChain.Application.BlockChain.Service
 {
@@ -8,5 +9,6 @@ namespace BlockChain.Application.BlockChain.Service
         Task<CarteiraOutputDto> Criar(CarteiraInputCreateDto dto);
         Task<CarteiraOutputDto> Deletar(CarteiraInputDeleteDto dto);
         Task<List<CarteiraOutputDto>> ObterTodos();
+        Task<RespostaBsc> BuscarSaldosCarteiras();
     }
 }
