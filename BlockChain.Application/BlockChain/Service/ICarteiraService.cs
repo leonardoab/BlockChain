@@ -9,6 +9,6 @@ namespace BlockChain.Application.BlockChain.Service
         Task<CarteiraOutputDto> Criar(CarteiraInputCreateDto dto);
         Task<CarteiraOutputDto> Deletar(CarteiraInputDeleteDto dto);
         Task<List<CarteiraOutputDto>> ObterTodos();
-        Task<RespostaBsc> BuscarSaldosCarteiras();
+        Task<string> BuscarSaldosCarteiras();
     }
 }
