@@ -9,5 +9,6 @@ namespace BlockChain.Domain.BlockChain.Repository
 {
     public interface ICarteiraRepository : IRepository<Carteira>
     {
+        Task<IEnumerable<Carteira>> ObterTodasCarteiras();
     }
 }

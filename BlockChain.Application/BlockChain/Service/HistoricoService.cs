@@ -11,12 +11,12 @@ namespace BlockChain.Application.BlockChain.Service
 {
     public class HistoricoService : IHistoricoService
     {
-        private readonly IHistoricoRepository playlistRepository;
+        private readonly IHistoricoRepository historicoRepository;
         private readonly IMapper mapper;
 
         public HistoricoService(IHistoricoRepository HistoricoRepository, IMapper mapper)
         {
-            this.playlistRepository = HistoricoRepository;
+            this.historicoRepository = HistoricoRepository;
             this.mapper = mapper;
         }
 
@@ -24,7 +24,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Historico = this.mapper.Map<Domain.BlockChain.Historico>(dto);
 
-            await this.playlistRepository.Save(Historico);
+            await this.historicoRepository.Save(Historico);
 
             return this.mapper.Map<HistoricoOutputDto>(Historico);
 
@@ -34,7 +34,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Historico = this.mapper.Map<Domain.BlockChain.Historico>(dto);
 
-            await this.playlistRepository.Delete(Historico);
+            await this.historicoRepository.Delete(Historico);
 
             return this.mapper.Map<HistoricoOutputDto>(Historico);
 
@@ -44,7 +44,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Historico = this.mapper.Map<Domain.BlockChain.Historico>(dto);
 
-            await this.playlistRepository.Update(Historico);
+            await this.historicoRepository.Update(Historico);
 
             return this.mapper.Map<HistoricoOutputDto>(Historico);
 
@@ -53,7 +53,7 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<HistoricoOutputDto>> ObterTodos()
         {
-            var Historico = await this.playlistRepository.GetAll();
+            var Historico = await this.historicoRepository.GetAll();
 
             return this.mapper.Map<List<HistoricoOutputDto>>(Historico);
         }

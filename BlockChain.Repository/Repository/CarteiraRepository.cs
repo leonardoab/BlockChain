@@ -2,6 +2,7 @@
 using BlockChain.Domain.BlockChain.Repository;
 using BlockChain.Repository.Context;
 using BlockChain.Repository.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace BlockChain.Repository.Repository
     {
         public CarteiraRepository(BlockChainContext context) : base(context)
         {
+            
+        }
+
+        public async Task<IEnumerable<Carteira>> ObterTodasCarteiras()
+        {
+            return await this.Query.Include(x => x.Historicos).ToListAsync();
         }
     }
 }

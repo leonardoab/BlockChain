@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BlockChain.Api"
+    "\\BlockChain.Api",
+    "\\BlockChain.Api\\Controllers",
+    "\\BlockChain.Domain",
+    "\\BlockChain.Domain\\BlockChain",
+    "\\BlockChain.Repository",
+    "\\BlockChain.Repository\\Mapping",
+    "\\BlockChain.Repository\\Repository"
   ],
   "SelectedNode": "\\BlockChain.sln",
   "PreviewInSolutionExplorer": false

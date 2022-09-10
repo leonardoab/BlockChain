@@ -16,11 +16,13 @@ namespace BlockChain.Application.BlockChain.Service
     public class CarteiraService : ICarteiraService
     {
         private readonly ICarteiraRepository carteiraRepository;
+        private readonly IHistoricoRepository historicoRepository;
         private readonly IMapper mapper;
 
-        public CarteiraService(ICarteiraRepository CarteiraRepository, IMapper mapper)
+        public CarteiraService(ICarteiraRepository CarteiraRepository, IHistoricoRepository HistoricoRepository, IMapper mapper)
         {
             this.carteiraRepository = CarteiraRepository;
+            this.historicoRepository = HistoricoRepository;
             this.mapper = mapper;
         }
 
@@ -74,9 +76,11 @@ namespace BlockChain.Application.BlockChain.Service
 
             HttpClient client = new HttpClient();
 
-            IList<Carteira> carteiras = (IList<Carteira>)await this.carteiraRepository.GetAll();
+            IList<Carteira> carteiras = (IList<Carteira>)await this.carteiraRepository.ObterTodasCarteiras();
 
             for (int i = 0; i < carteiras.Count; i++) {
+
+                Task.Delay(1000).Wait();
 
                 carteira = carteiras[i].CodigoCarteira;
                 
@@ -87,38 +91,47 @@ namespace BlockChain.Application.BlockChain.Service
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
                     var respostaBsc = JsonConvert.DeserializeObject<RespostaBsc>(responseBody);
+                    
 
-                    float saldo = float.Parse(respostaBsc.result.Substring(0, respostaBsc.result.Length - 16));
-
-                    if (carteiras[i].Saldo != saldo)
+                    try
                     {
-                        carteiras[i].Saldo = saldo;
-                        this.carteiraRepository.Update(carteiras[i]);
 
+                        float saldo = float.Parse(respostaBsc.result.Substring(0, respostaBsc.result.Length - 16));
+
+                        if (carteiras[i].Saldo != saldo)
+                        {
+
+                            Historico historico = new Historico();
+                            historico.NumeroTransacoes = 0;
+                            historico.Saldo = saldo;
+                            historico.CodigoCarteira = carteiras[i].CodigoCarteira;
+                            historico.DataHistorico = DateTime.Now;
+                            await this.historicoRepository.Save(historico);
+
+                            carteiras[i].Saldo = saldo;
+                            carteiras[i].DataVerificacao = DateTime.Now;
+                            carteiras[i].Historicos.Add(historico);
+                            await this.carteiraRepository.Update(carteiras[i]);                          
+
+
+
+                        }
 
                     }
 
-                    //await this.carteiraRepository.Update(Carteiras[i]);
+                    catch {
+                    
+                    }                  
+
+                    
 
                 }
-                else
-                {
-
-                    string msg = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(msg);
-                    throw new Exception(msg);
-                }
+               
 
 
             }
 
-            return "Sucesso";
-
-
-
-
-
-            
+            return "Sucesso";            
             
 
         }
