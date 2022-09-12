@@ -8,7 +8,8 @@ namespace BlockChain.Application.BlockChain.Service
         Task<CarteiraOutputDto> Atualizar(CarteiraInputUpdateDto dto);
         Task<CarteiraOutputDto> Criar(CarteiraInputCreateDto dto);
         Task<CarteiraOutputDto> Deletar(CarteiraInputDeleteDto dto);
-        Task<List<CarteiraOutputDto>> ObterTodos();
-        Task<string> BuscarSaldosCarteiras();
+        Task<List<CarteiraOutputDto>> ObterTodos();        
+        Task<string> AtualizarCarteiras();
+        
     }
 }

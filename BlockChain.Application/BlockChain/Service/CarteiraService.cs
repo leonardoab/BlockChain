@@ -64,76 +64,186 @@ namespace BlockChain.Application.BlockChain.Service
             return this.mapper.Map<List<CarteiraOutputDto>>(Carteira);
         }
 
-        public async Task<string> BuscarSaldosCarteiras()
+
+        public async Task<string> AtualizarCarteiras()
         {
-            //string uri = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x6Dd60AFB2586D31Bf390450aDf5E6A9659d48c4A&address=0xdbd8e899c2b2aa8c1da54c824fea17d58e082465&tag=latest&apikey=MPQA8WX7TMPXWCCBM16HSZDPIP2YQNXHQA";
 
-            string uriBase = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=";
-            string contrato = "0x6Dd60AFB2586D31Bf390450aDf5E6A9659d48c4A";
-            string uriBaseSegundaParte = "&address=";
-            string carteira = "0xdbd8e899c2b2aa8c1da54c824fea17d58e082465";
-            string uriBaseTerceiraParte = "&tag=latest&apikey=MPQA8WX7TMPXWCCBM16HSZDPIP2YQNXHQA";
+            IList<String> linhasTabela = await BuscarTabela("https://bscscan.com/token/tokenholderchart/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a?range=500");
 
-            HttpClient client = new HttpClient();
+            linhasTabela.RemoveAt(497);
 
             IList<Carteira> carteiras = (IList<Carteira>)await this.carteiraRepository.ObterTodasCarteiras();
 
-            for (int i = 0; i < carteiras.Count; i++) {
+            IList<String> listaCarteirasAtualizadas = new List<String>();
 
-                Task.Delay(1000).Wait();
 
-                carteira = carteiras[i].CodigoCarteira;
+
+            for (int i = 0; i < linhasTabela.Count; i++)
+            {                
+
+                IList<String> campos = await ConverterLinhaEmCampos(linhasTabela[i]);
+
+                listaCarteirasAtualizadas.Add(campos[1]);
+
+                var result = carteiras.Where(x => x.CodigoCarteira.Equals(campos[1]));      
+
                 
-                HttpResponseMessage response = await client.GetAsync(uriBase + contrato + uriBaseSegundaParte + carteira + uriBaseTerceiraParte);
 
-
-                if (response.IsSuccessStatusCode)
+                if (result.Count() > 0)
                 {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var respostaBsc = JsonConvert.DeserializeObject<RespostaBsc>(responseBody);
-                    
+                    Carteira carteiraEncontrada = new Carteira();
+                    carteiraEncontrada = result.First();
 
-                    try
+                    if (carteiraEncontrada.Saldo != float.Parse(campos[2]))
                     {
+                        carteiraEncontrada.Saldo = float.Parse(campos[2]);
+                        carteiraEncontrada.DataVerificacao = DateTime.Now;
+                        carteiraEncontrada.Rank = 1;
 
-                        float saldo = float.Parse(respostaBsc.result.Substring(0, respostaBsc.result.Length - 16));
-
-                        if (carteiras[i].Saldo != saldo)
-                        {
-
-                            Historico historico = new Historico();
-                            historico.NumeroTransacoes = 0;
-                            historico.Saldo = saldo;
-                            historico.CodigoCarteira = carteiras[i].CodigoCarteira;
-                            historico.DataHistorico = DateTime.Now;
-                            await this.historicoRepository.Save(historico);
-
-                            carteiras[i].Saldo = saldo;
-                            carteiras[i].DataVerificacao = DateTime.Now;
-                            carteiras[i].Historicos.Add(historico);
-                            await this.carteiraRepository.Update(carteiras[i]);                          
+                        Historico historico = new Historico();
+                        historico.NumeroTransacoes = 0;
+                        historico.Saldo = carteiraEncontrada.Saldo;
+                        historico.CodigoCarteira = carteiraEncontrada.CodigoCarteira;
+                        historico.DataHistorico = DateTime.Now;
+                        await this.historicoRepository.Save(historico);
 
 
-
-                        }
-
+                        carteiraEncontrada.Historicos.Add(historico);
+                        await this.carteiraRepository.Update(carteiraEncontrada);
                     }
 
-                    catch {
-                    
-                    }                  
-
-                    
 
                 }
-               
+
+                else
+                {
+
+                    Carteira carteiraNova = new Carteira();
+                    carteiraNova.CodigoCarteira = campos[1];
+                    carteiraNova.DataVerificacao = DateTime.Now;                    
+                    carteiraNova.Saldo = float.Parse(campos[2]);
+                    carteiraNova.Rank = 1;
+                    carteiraNova.NumeroTransacoes = 0;
+                    carteiraNova.TipoCarteira = "Privada";
+
+                    await this.carteiraRepository.Save(carteiraNova);
+
+
+                    Historico historico = new Historico();
+                    historico.NumeroTransacoes = 0;
+                    historico.Saldo = carteiraNova.Saldo;
+                    historico.CodigoCarteira = carteiraNova.CodigoCarteira;
+                    historico.DataHistorico = DateTime.Now;
+                    await this.historicoRepository.Save(historico);
+
+                    IList<Historico> historicos = new List<Historico>();
+                    historicos.Add(historico);
+                    carteiraNova.Historicos = historicos;
+                    await this.carteiraRepository.Update(carteiraNova);
+
+                }
+
 
 
             }
 
-            return "Sucesso";            
+            for (int i = 0; i < carteiras.Count; i++)
+            {
+
+                var result = listaCarteirasAtualizadas.Contains(carteiras[i].CodigoCarteira);
+                
+                if (!result)
+                {
+                    carteiras[i].Rank = 0;
+                    await this.carteiraRepository.Update(carteiras[i]);
+
+                }
+
+
+            }
+
             
+            return "Sucesso";
+        }
+
+
+        public async Task<IList<String>> BuscarTabela(string url)
+        {
+            IList<String> linhasTabela = new List<String>();
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                var inicio = responseBody.IndexOf("<tbody>");
+                var fim = responseBody.IndexOf("</tbody>");
+
+                responseBody = responseBody.Substring(inicio, (fim - inicio));
+
+                while (responseBody.IndexOf("<tr>") > 0)
+                {
+                    inicio = responseBody.IndexOf("<tr>");
+                    fim = responseBody.IndexOf("</td><tr>") + 9;
+                    var linha = responseBody.Substring(inicio, (fim - inicio));
+                    responseBody = " " + responseBody.Substring(fim - 4, (responseBody.Length - (fim - 4 + 1)));
+                    linhasTabela.Add(linha);
+
+                }
+
+            }
+
+            return linhasTabela;
 
         }
+
+        public Task<IList<string>> ConverterLinhaEmCampos(String listaTabela)
+        {
+
+            IList<String> listaCampos = new List<String>();
+
+            while (listaTabela.IndexOf("<td>") > 0)
+            {
+                var inicio = listaTabela.IndexOf("<td>");
+                var fim = listaTabela.IndexOf("</td>") + 5;
+                var linha = listaTabela.Substring(inicio + 4, (fim - inicio) - 9);
+
+                if (linha.IndexOf("c4a?a=") > 0)
+                {
+
+                    inicio = listaTabela.IndexOf("c4a?a=");
+                    linha = linha.Substring(inicio + 1, 42);
+
+                }
+
+                if (linha.IndexOf(".") > 0)
+                {
+                    linha = linha.Substring(0, linha.IndexOf("."));
+
+                }
+
+                if (linha.IndexOf(",") > 0)
+                {
+                    linha = linha.Replace(",", "");
+
+                }
+
+
+                listaTabela = " " + listaTabela.Substring(fim, (listaTabela.Length - (fim)));
+                listaCampos.Add(linha);
+
+            }
+
+            return Task.FromResult(listaCampos);
+
+
+
+
+        }
+
+
+
     }
 }

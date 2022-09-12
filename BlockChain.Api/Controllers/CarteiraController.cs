@@ -21,11 +21,13 @@ namespace BlockChain.Api.Controllers
             this.carteiraService = carteiraService;
         }
 
+       
+
         [HttpGet]
-        [Route("AtualizarSaldosCarteiras")]
-        public async Task<IActionResult> AtualizarSaldosCarteiras()
+        [Route("AtualizarCarteiras")]
+        public async Task<IActionResult> AtualizarCarteiras()
         {
-            return Ok(await this.carteiraService.BuscarSaldosCarteiras());            
+            return Ok(await this.carteiraService.AtualizarCarteiras());
 
         }
 
