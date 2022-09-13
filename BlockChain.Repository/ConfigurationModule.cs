@@ -27,7 +27,8 @@ namespace BlockChain.Repository
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IHistoricoRepository, HistoricoRepository>();
             services.AddScoped<ITransacaoRepository, TransacaoRepository>();
-            
+            services.AddScoped<INftRepository, NftRepository>();
+
 
             return services;
         }

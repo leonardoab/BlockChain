@@ -50,6 +50,13 @@ namespace BlockChain.Application.BlockChain.Profile
             CreateMap<Domain.BlockChain.Carteira, CarteiraOutputDto>();
 
 
+            CreateMap<NftInputCreateDto, Domain.BlockChain.Nft>();
+
+            CreateMap<NftInputUpdateDto, Domain.BlockChain.Nft>();
+
+            CreateMap<Domain.BlockChain.Nft, NftOutputDto>();
+
+
 
 
 

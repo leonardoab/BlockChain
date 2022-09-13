@@ -23,9 +23,11 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.DataVerificacao);
             builder.Property(x => x.Rank);
             builder.Property(x => x.TipoCarteira);
+            builder.Property(x => x.SaldoDiaro);
 
             builder.HasMany(x => x.Transacoes).WithOne();
             builder.HasMany(x => x.Historicos).WithOne();
+            builder.HasMany(x => x.Nfts).WithOne();
         }
     }
 }

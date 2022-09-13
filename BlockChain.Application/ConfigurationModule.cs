@@ -20,7 +20,9 @@ namespace BlockChain.Application
             services.AddScoped<IHistoricoService, HistoricoService>();
             services.AddScoped<ITransacaoService, TransacaoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
-            
+            services.AddScoped<IGenericService, GenericService>();
+            services.AddScoped<INftService, NftService>();
+
 
             return services;
         }

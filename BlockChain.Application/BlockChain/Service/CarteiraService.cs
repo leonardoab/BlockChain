@@ -17,12 +17,14 @@ namespace BlockChain.Application.BlockChain.Service
     {
         private readonly ICarteiraRepository carteiraRepository;
         private readonly IHistoricoRepository historicoRepository;
+        private readonly IGenericService genericService;
         private readonly IMapper mapper;
 
-        public CarteiraService(ICarteiraRepository CarteiraRepository, IHistoricoRepository HistoricoRepository, IMapper mapper)
+        public CarteiraService(ICarteiraRepository CarteiraRepository, IHistoricoRepository HistoricoRepository, IGenericService GenericService, IMapper mapper)
         {
             this.carteiraRepository = CarteiraRepository;
             this.historicoRepository = HistoricoRepository;
+            this.genericService = GenericService;            
             this.mapper = mapper;
         }
 
@@ -68,7 +70,7 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<string> AtualizarCarteiras()
         {
 
-            IList<String> linhasTabela = await BuscarTabela("https://bscscan.com/token/tokenholderchart/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a?range=500");
+            IList<String> linhasTabela = await genericService.BuscarTabela("https://bscscan.com/token/tokenholderchart/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a?range=500");
 
             linhasTabela.RemoveAt(497);
 
@@ -81,7 +83,7 @@ namespace BlockChain.Application.BlockChain.Service
             for (int i = 0; i < linhasTabela.Count; i++)
             {                
 
-                IList<String> campos = await ConverterLinhaEmCampos(linhasTabela[i]);
+                IList<String> campos = await genericService.ConverterLinhaEmCampos(linhasTabela[i]);
 
                 listaCarteirasAtualizadas.Add(campos[1]);
 
@@ -100,13 +102,8 @@ namespace BlockChain.Application.BlockChain.Service
                         carteiraEncontrada.DataVerificacao = DateTime.Now;
                         carteiraEncontrada.Rank = 1;
 
-                        Historico historico = new Historico();
-                        historico.NumeroTransacoes = 0;
-                        historico.Saldo = carteiraEncontrada.Saldo;
-                        historico.CodigoCarteira = carteiraEncontrada.CodigoCarteira;
-                        historico.DataHistorico = DateTime.Now;
+                        Historico historico = new Historico(carteiraEncontrada);                        
                         await this.historicoRepository.Save(historico);
-
 
                         carteiraEncontrada.Historicos.Add(historico);
                         await this.carteiraRepository.Update(carteiraEncontrada);
@@ -128,17 +125,12 @@ namespace BlockChain.Application.BlockChain.Service
 
                     await this.carteiraRepository.Save(carteiraNova);
 
+                    Historico historico = new Historico(carteiraNova);
+                    
+                    await this.historicoRepository.Save(historico);                    
+                    
+                    carteiraNova.Historicos.Add(historico);
 
-                    Historico historico = new Historico();
-                    historico.NumeroTransacoes = 0;
-                    historico.Saldo = carteiraNova.Saldo;
-                    historico.CodigoCarteira = carteiraNova.CodigoCarteira;
-                    historico.DataHistorico = DateTime.Now;
-                    await this.historicoRepository.Save(historico);
-
-                    IList<Historico> historicos = new List<Historico>();
-                    historicos.Add(historico);
-                    carteiraNova.Historicos = historicos;
                     await this.carteiraRepository.Update(carteiraNova);
 
                 }
@@ -167,81 +159,9 @@ namespace BlockChain.Application.BlockChain.Service
         }
 
 
-        public async Task<IList<String>> BuscarTabela(string url)
-        {
-            IList<String> linhasTabela = new List<String>();
+        
 
-            HttpClient client = new HttpClient();
-
-            HttpResponseMessage response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var inicio = responseBody.IndexOf("<tbody>");
-                var fim = responseBody.IndexOf("</tbody>");
-
-                responseBody = responseBody.Substring(inicio, (fim - inicio));
-
-                while (responseBody.IndexOf("<tr>") > 0)
-                {
-                    inicio = responseBody.IndexOf("<tr>");
-                    fim = responseBody.IndexOf("</td><tr>") + 9;
-                    var linha = responseBody.Substring(inicio, (fim - inicio));
-                    responseBody = " " + responseBody.Substring(fim - 4, (responseBody.Length - (fim - 4 + 1)));
-                    linhasTabela.Add(linha);
-
-                }
-
-            }
-
-            return linhasTabela;
-
-        }
-
-        public Task<IList<string>> ConverterLinhaEmCampos(String listaTabela)
-        {
-
-            IList<String> listaCampos = new List<String>();
-
-            while (listaTabela.IndexOf("<td>") > 0)
-            {
-                var inicio = listaTabela.IndexOf("<td>");
-                var fim = listaTabela.IndexOf("</td>") + 5;
-                var linha = listaTabela.Substring(inicio + 4, (fim - inicio) - 9);
-
-                if (linha.IndexOf("c4a?a=") > 0)
-                {
-
-                    inicio = listaTabela.IndexOf("c4a?a=");
-                    linha = linha.Substring(inicio + 1, 42);
-
-                }
-
-                if (linha.IndexOf(".") > 0)
-                {
-                    linha = linha.Substring(0, linha.IndexOf("."));
-
-                }
-
-                if (linha.IndexOf(",") > 0)
-                {
-                    linha = linha.Replace(",", "");
-
-                }
-
-
-                listaTabela = " " + listaTabela.Substring(fim, (listaTabela.Length - (fim)));
-                listaCampos.Add(linha);
-
-            }
-
-            return Task.FromResult(listaCampos);
-
-
-
-
-        }
+        
 
 
 
