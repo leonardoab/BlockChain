@@ -12,5 +12,6 @@ namespace BlockChain.Domain.BlockChain
         public string Nome { get; set; }
         public string Imagem { get; set; }
         public string Rank { get; set; }
+        public int IdRede { get; set; }
     }
 }

@@ -20,9 +20,10 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.Nome).HasMaxLength(200);
             builder.Property(x => x.Imagem).IsRequired();
             builder.Property(x => x.Rank);
-            
+            builder.Property(x => x.IdRede);
 
-           
+
+
         }
     }
 }
