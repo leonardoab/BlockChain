@@ -136,13 +136,15 @@ namespace BlockChain.Application.BlockChain.Dto
     public record NftInputCreateDto(
         string Nome,
         string Imagem,
-        string Rank);
+        string Rank,
+        int IdRede);
 
     public record NftInputUpdateDto(
         Guid Id,
         string Nome,
         string Imagem,
-        string Rank);
+        string Rank,
+        int IdRede);
 
     public record NftInputDeleteDto(
         Guid Id);
@@ -151,7 +153,9 @@ namespace BlockChain.Application.BlockChain.Dto
         Guid Id,
         string Nome,
         string Imagem,
-        string Rank);
+        string Rank,
+        int IdRede
+        );
 
 
 
