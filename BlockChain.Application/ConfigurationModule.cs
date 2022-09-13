@@ -1,4 +1,5 @@
 ﻿using BlockChain.Application.BlockChain.Service;
+using BlockChain.Cross.Utils;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -22,6 +23,9 @@ namespace BlockChain.Application
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IGenericService, GenericService>();
             services.AddScoped<INftService, NftService>();
+
+            services.AddScoped<AzureBlobStorage>();
+            services.AddHttpClient();
 
 
             return services;
