@@ -24,7 +24,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             this.carteiraRepository = CarteiraRepository;
             this.historicoRepository = HistoricoRepository;
-            this.genericService = GenericService;            
+            this.genericService = GenericService;
             this.mapper = mapper;
         }
 
@@ -81,15 +81,15 @@ namespace BlockChain.Application.BlockChain.Service
 
 
             for (int i = 0; i < linhasTabela.Count; i++)
-            {                
+            {
 
                 IList<String> campos = await genericService.ConverterLinhaEmCampos(linhasTabela[i]);
 
                 listaCarteirasAtualizadas.Add(campos[1]);
 
-                var result = carteiras.Where(x => x.CodigoCarteira.Equals(campos[1]));      
+                var result = carteiras.Where(x => x.CodigoCarteira.Equals(campos[1]));
 
-                
+
 
                 if (result.Count() > 0)
                 {
@@ -102,7 +102,7 @@ namespace BlockChain.Application.BlockChain.Service
                         carteiraEncontrada.DataVerificacao = DateTime.Now;
                         carteiraEncontrada.Rank = 1;
 
-                        Historico historico = new Historico(carteiraEncontrada);                        
+                        Historico historico = new Historico(carteiraEncontrada);
                         await this.historicoRepository.Save(historico);
 
                         carteiraEncontrada.Historicos.Add(historico);
@@ -117,7 +117,7 @@ namespace BlockChain.Application.BlockChain.Service
 
                     Carteira carteiraNova = new Carteira();
                     carteiraNova.CodigoCarteira = campos[1];
-                    carteiraNova.DataVerificacao = DateTime.Now;                    
+                    carteiraNova.DataVerificacao = DateTime.Now;
                     carteiraNova.Saldo = float.Parse(campos[2]);
                     carteiraNova.Rank = 1;
                     carteiraNova.NumeroTransacoes = 0;
@@ -126,9 +126,9 @@ namespace BlockChain.Application.BlockChain.Service
                     await this.carteiraRepository.Save(carteiraNova);
 
                     Historico historico = new Historico(carteiraNova);
-                    
-                    await this.historicoRepository.Save(historico);                    
-                    
+
+                    await this.historicoRepository.Save(historico);
+
                     carteiraNova.Historicos.Add(historico);
 
                     await this.carteiraRepository.Update(carteiraNova);
@@ -139,31 +139,110 @@ namespace BlockChain.Application.BlockChain.Service
 
             }
 
+            IList<Carteira> carteirasFora = new List<Carteira>();
+
             for (int i = 0; i < carteiras.Count; i++)
             {
 
                 var result = listaCarteirasAtualizadas.Contains(carteiras[i].CodigoCarteira);
-                
+
                 if (!result)
                 {
                     carteiras[i].Rank = 0;
                     await this.carteiraRepository.Update(carteiras[i]);
+                    carteirasFora.Add(carteiras[i]);
 
                 }
 
 
             }
 
-            
+            await BuscarSaldosCarteirasAPI(carteirasFora);
+
+
             return "Sucesso";
         }
 
 
-        
+        public async Task<string> BuscarSaldosCarteirasAPI(IList<Carteira> carteiras)
+        {
+            //string uri = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x6Dd60AFB2586D31Bf390450aDf5E6A9659d48c4A&address=0xdbd8e899c2b2aa8c1da54c824fea17d58e082465&tag=latest&apikey=MPQA8WX7TMPXWCCBM16HSZDPIP2YQNXHQA";
 
-        
+            string uriBase = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=";
+            string contrato = "0x6Dd60AFB2586D31Bf390450aDf5E6A9659d48c4A";
+            string uriBaseSegundaParte = "&address=";
+            string carteira = "0xdbd8e899c2b2aa8c1da54c824fea17d58e082465";
+            string uriBaseTerceiraParte = "&tag=latest&apikey=MPQA8WX7TMPXWCCBM16HSZDPIP2YQNXHQA";
+
+            HttpClient client = new HttpClient();
+
+            
+
+            for (int i = 0; i < carteiras.Count; i++)
+            {
+
+                Task.Delay(1000).Wait();
+
+                carteira = carteiras[i].CodigoCarteira;
+
+                HttpResponseMessage response = await client.GetAsync(uriBase + contrato + uriBaseSegundaParte + carteira + uriBaseTerceiraParte);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var respostaBsc = JsonConvert.DeserializeObject<RespostaBsc>(responseBody);
+
+
+                    try
+                    {
+                        float saldo = 0;
+
+                        if (respostaBsc.result.Length > 18)
+                        {
+                            saldo = float.Parse(respostaBsc.result.Substring(0, respostaBsc.result.Length - 18));
+                        }
+
+                        if (carteiras[i].Saldo != saldo)
+                        {
+
+                            Historico historico = new Historico();
+                            historico.NumeroTransacoes = 0;
+                            historico.Saldo = saldo;
+                            historico.CodigoCarteira = carteiras[i].CodigoCarteira;
+                            historico.DataHistorico = DateTime.Now;
+                            await this.historicoRepository.Save(historico);
+
+                            carteiras[i].Saldo = saldo;
+                            carteiras[i].DataVerificacao = DateTime.Now;
+                            carteiras[i].Historicos.Add(historico);
+                            await this.carteiraRepository.Update(carteiras[i]);
 
 
 
+                        }
+
+
+                    }
+
+                    catch
+                    {
+
+                    }
+
+
+
+                }
+
+
+
+            }
+
+            return "Sucesso";
+
+
+        }
     }
+
 }
+
