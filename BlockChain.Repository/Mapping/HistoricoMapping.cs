@@ -22,6 +22,7 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.Saldo);
             builder.Property(x => x.CodigoCarteira);
             builder.Property(x => x.NumeroTransacoes);
+            builder.Property(x => x.Diferenca);
 
 
 

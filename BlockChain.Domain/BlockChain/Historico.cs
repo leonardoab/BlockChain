@@ -25,6 +25,7 @@ namespace BlockChain.Domain.BlockChain
         public DateTime DataHistorico { get; set; }
         public string CodigoCarteira { get; set; }
         public float Saldo { get; set; }
+        public float Diferenca { get; set; }
         public int NumeroTransacoes { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace BlockChain.Application.BlockChain.Service
 
             IList<String> listaCarteirasAtualizadas = new List<String>();
 
-
+            float diferenca = 0;
 
             for (int i = 0; i < linhasTabela.Count; i++)
             {
@@ -98,11 +98,13 @@ namespace BlockChain.Application.BlockChain.Service
 
                     if (carteiraEncontrada.Saldo != float.Parse(campos[2]))
                     {
+                        diferenca = float.Parse(campos[2]) - carteiraEncontrada.Saldo;
                         carteiraEncontrada.Saldo = float.Parse(campos[2]);
                         carteiraEncontrada.DataVerificacao = DateTime.Now;
                         carteiraEncontrada.Rank = 1;
 
                         Historico historico = new Historico(carteiraEncontrada);
+                        historico.Diferenca = diferenca;
                         await this.historicoRepository.Save(historico);
 
                         carteiraEncontrada.Historicos.Add(historico);
@@ -126,6 +128,7 @@ namespace BlockChain.Application.BlockChain.Service
                     await this.carteiraRepository.Save(carteiraNova);
 
                     Historico historico = new Historico(carteiraNova);
+                    historico.Diferenca = carteiraNova.Saldo;
 
                     await this.historicoRepository.Save(historico);
 
@@ -176,7 +179,9 @@ namespace BlockChain.Application.BlockChain.Service
 
             HttpClient client = new HttpClient();
 
-            
+            float diferenca = 0;
+
+
 
             for (int i = 0; i < carteiras.Count; i++)
             {
@@ -205,9 +210,10 @@ namespace BlockChain.Application.BlockChain.Service
 
                         if (carteiras[i].Saldo != saldo)
                         {
-
+                            diferenca = saldo - carteiras[i].Saldo;
                             Historico historico = new Historico();
                             historico.NumeroTransacoes = 0;
+                            historico.Diferenca = diferenca;
                             historico.Saldo = saldo;
                             historico.CodigoCarteira = carteiras[i].CodigoCarteira;
                             historico.DataHistorico = DateTime.Now;

@@ -56,14 +56,16 @@ namespace BlockChain.Application.BlockChain.Dto
         DateTime DataHistorico,
         string CodigoCarteira,
         float Saldo,
-        int NumeroTransacoes);
+        int NumeroTransacoes,
+        float Diferenca);
 
     public record HistoricoInputUpdateDto(
         Guid Id,
         DateTime DataHistorico,
         string CodigoCarteira,
         float Saldo,
-        int NumeroTransacoes);
+        int NumeroTransacoes,
+        float Diferenca);
 
     public record HistoricoInputDeleteDto(
         Guid Id);
@@ -73,7 +75,8 @@ namespace BlockChain.Application.BlockChain.Dto
         DateTime DataHistorico,
         string CodigoCarteira,
         float Saldo,
-        int NumeroTransacoes);
+        int NumeroTransacoes,
+        float Diferenca);
 
     /// HISTORICO    
 
