@@ -20,7 +20,10 @@ namespace BlockChain.Repository.Repository
 
         public async Task<IEnumerable<Carteira>> ObterTodasCarteiras()
         {
-            return await this.Query.Include(x => x.Historicos).ToListAsync();
+            return await this.Query.Include(x => x.Historicos)
+                                   .Include(x => x.Transacoes)
+                                   .Include(x => x.Nfts)
+                                   .ToListAsync();
         }
     }
 }

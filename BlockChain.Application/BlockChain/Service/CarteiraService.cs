@@ -61,7 +61,7 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<CarteiraOutputDto>> ObterTodos()
         {
-            var Carteira = await this.carteiraRepository.GetAll();
+            var Carteira = await this.carteiraRepository.ObterTodasCarteiras();
 
             return this.mapper.Map<List<CarteiraOutputDto>>(Carteira);
         }

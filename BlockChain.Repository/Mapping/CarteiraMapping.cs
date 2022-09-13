@@ -23,7 +23,7 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.DataVerificacao);
             builder.Property(x => x.Rank);
             builder.Property(x => x.TipoCarteira);
-            builder.Property(x => x.SaldoDiaro);
+            builder.Property(x => x.SaldoDiario);
 
             builder.HasMany(x => x.Transacoes).WithOne();
             builder.HasMany(x => x.Historicos).WithOne();

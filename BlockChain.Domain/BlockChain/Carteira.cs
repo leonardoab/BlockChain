@@ -18,7 +18,7 @@ namespace BlockChain.Domain.BlockChain
 
         public string CodigoCarteira { get; set; }
         public float Saldo { get; set; }
-        public float SaldoDiaro { get; set; }
+        public float SaldoDiario { get; set; }
         public int NumeroTransacoes { get; set; }
         public DateTime DataVerificacao { get; set; }
         public int Rank { get; set; }
