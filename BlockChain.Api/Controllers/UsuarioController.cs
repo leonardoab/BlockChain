@@ -11,7 +11,7 @@ namespace BlockChain.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class UsuarioController : ControllerBase
     {
         private readonly IMediator mediator;

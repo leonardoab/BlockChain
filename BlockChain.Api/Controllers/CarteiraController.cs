@@ -3,6 +3,7 @@ using BlockChain.Application.BlockChain.Handler.Command;
 using BlockChain.Application.BlockChain.Handler.Query;
 using BlockChain.Application.BlockChain.Service;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace BlockChain.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CarteiraController : ControllerBase
     {
         private readonly IMediator mediator;

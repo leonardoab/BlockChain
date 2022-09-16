@@ -114,15 +114,14 @@ namespace BlockChain.Application.BlockChain.Dto
     public record UsuarioInputCreateDto(
         string Nome,
         string Email,
-        string Password,
-        IList<Transacao> Transacoes);
+        string Password);
 
     public record UsuarioInputUpdateDto(
         Guid Id,
         string Nome,
         string Email,
         string Password,
-        IList<Transacao> Transacoes);
+        IList<Carteira> Carteiras);
 
     public record UsuarioInputDeleteDto(
         Guid Id);
@@ -132,7 +131,7 @@ namespace BlockChain.Application.BlockChain.Dto
         string Nome,
         string Email,
         string Password,
-        IList<Transacao> Transacoes);
+        IList<Carteira> Carteiras);
 
     //NFT
 

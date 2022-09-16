@@ -34,6 +34,9 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Usuario = this.mapper.Map<Domain.BlockChain.Usuario>(dto);
 
+            Usuario.Validate();
+            Usuario.SetPassword();
+
             await this.usuarioRepository.Save(Usuario);
 
             return this.mapper.Map<UsuarioOutputDto>(Usuario);
@@ -63,7 +66,7 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<UsuarioOutputDto>> ObterTodos()
         {
-            var Usuario = await this.usuarioRepository.GetAll();
+            var Usuario = await this.usuarioRepository.ObterTodosUsuarios();
 
             return this.mapper.Map<List<UsuarioOutputDto>>(Usuario);
         }

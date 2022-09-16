@@ -9,5 +9,6 @@ namespace BlockChain.Domain.BlockChain.Repository
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {
+        Task<IEnumerable<Usuario>> ObterTodosUsuarios();
     }
 }
