@@ -160,6 +160,11 @@ namespace BlockChain.Application.BlockChain.Dto
         int IdRede
         );
 
+    public record UsuarioInputAutenticacaoDto(
+                string Email,
+                string Password);
+
+
 
 
 

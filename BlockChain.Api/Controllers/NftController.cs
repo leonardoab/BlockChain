@@ -2,12 +2,14 @@
 using BlockChain.Application.BlockChain.Handler.Command;
 using BlockChain.Application.BlockChain.Handler.Query;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlockChain.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NftController : ControllerBase
     {
         private readonly IMediator mediator;
