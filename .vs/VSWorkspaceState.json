@@ -1,17 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\BlockChain.Api",
-    "\\BlockChain.Api\\Controllers",
-    "\\BlockChain.Application",
-    "\\BlockChain.Application\\BlockChain",
-    "\\BlockChain.Application\\BlockChain\\Service",
-    "\\BlockChain.Domain",
-    "\\BlockChain.Domain\\BlockChain",
-    "\\BlockChain.Repository",
-    "\\BlockChain.Repository\\Mapping",
-    "\\BlockChain.Repository\\Repository"
+    ""
   ],
-  "SelectedNode": "\\BlockChain.Application\\BlockChain\\Service\\CarteiraService.cs",
   "PreviewInSolutionExplorer": false
 }
