@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\backend"
   ],
+  "SelectedNode": "\\backend\\BlockChain.sln",
   "PreviewInSolutionExplorer": false
 }
