@@ -16,7 +16,7 @@ namespace BlockChain.Application.BlockChain.Service
 {
     public class UsuarioService : IUsuarioService
     {
-        
+
         private readonly IUsuarioRepository usuarioRepository;
         private readonly IMapper mapper;
 
@@ -33,6 +33,10 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<UsuarioOutputDto> Criar(UsuarioInputCreateDto dto)
         {
             var Usuario = this.mapper.Map<Domain.BlockChain.Usuario>(dto);
+
+            var usuarios = await this.usuarioRepository.FindAllByCriteria(x => x.Email.Valor == Usuario.Email.Valor);
+
+            if (usuarios.Count() > 0) return null;
 
             Usuario.Validate();
             Usuario.SetPassword();
@@ -57,6 +61,9 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Usuario = this.mapper.Map<Domain.BlockChain.Usuario>(dto);
 
+            Usuario.Validate();
+            Usuario.SetPassword();
+
             await this.usuarioRepository.Update(Usuario);
 
             return this.mapper.Map<UsuarioOutputDto>(Usuario);
@@ -71,20 +78,21 @@ namespace BlockChain.Application.BlockChain.Service
             return this.mapper.Map<List<UsuarioOutputDto>>(Usuario);
         }
 
-        
+
 
         public async Task<bool> AuthenticateUser(UsuarioInputAutenticacaoDto dto)
         {
             var usuario = this.mapper.Map<Usuario>(dto);
 
-            var usuarios = await this.usuarioRepository.GetAll();
+            Usuario usuarioEncontrado = null;
 
-            Usuario usuarioEncontrado = usuarios.Where(x => x.Email.Valor.Equals(usuario.Email.Valor)).First();
+            var usuarios = await this.usuarioRepository.FindAllByCriteria(x => x.Email.Valor == usuario.Email.Valor);
 
-            if (usuarioEncontrado == null) return false;
+            if (usuarios.Count() == 0) return false;
 
             else
             {
+                usuarioEncontrado = usuarios.First();
 
                 string senha = usuarioEncontrado.Password.Valor;
 
@@ -118,3 +126,4 @@ namespace BlockChain.Application.BlockChain.Service
         }
     }
 }
+ 

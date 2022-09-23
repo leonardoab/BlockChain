@@ -35,6 +35,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
+        [Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllCarteiraQuery()));
@@ -43,6 +44,7 @@ namespace BlockChain.Api.Controllers
         //[HttpPost("{idBanda}")]
         [HttpPost]
         [Route("Criar")]
+        [Authorize]
         public async Task<IActionResult> Criar(CarteiraInputCreateDto dto)
         {
             var result = await this.mediator.Send(new CreateCarteiraCommand(dto));
@@ -51,6 +53,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpDelete]
         [Route("Deletar")]
+        [Authorize]
         public async Task<IActionResult> Deletar(CarteiraInputDeleteDto dto)
         {
             var result = await this.mediator.Send(new DeleteCarteiraCommand(dto));
@@ -62,6 +65,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPatch]
         [Route("Atualizar")]
+        [Authorize]
         public async Task<IActionResult> Atualizar(CarteiraInputUpdateDto dto)
         {
             var result = await this.mediator.Send(new UpdateCarteiraCommand(dto));

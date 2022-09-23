@@ -15,10 +15,8 @@ namespace BlockChain.Application.BlockChain.Dto
         int NumeroTransacoes,
         DateTime DataVerificacao,
         int Rank,
-        string TipoCarteira,        
-        IList<Historico> Historicos,
-        IList<Transacao> Transacoes,
-        IList<Nft> Nfts);
+        string TipoCarteira        
+        );
 
     public record CarteiraInputUpdateDto(
         Guid Id,
@@ -28,10 +26,7 @@ namespace BlockChain.Application.BlockChain.Dto
         int NumeroTransacoes,
         DateTime DataVerificacao,
         int Rank,
-        string TipoCarteira,       
-        IList<Historico> Historicos,
-        IList<Transacao> Transacoes,
-        IList<Nft> Nfts);
+        string TipoCarteira);
 
     public record CarteiraInputDeleteDto(
         Guid Id);
@@ -120,8 +115,7 @@ namespace BlockChain.Application.BlockChain.Dto
         Guid Id,
         string Nome,
         string Email,
-        string Password,
-        IList<Carteira> Carteiras);
+        string Password);
 
     public record UsuarioInputDeleteDto(
         Guid Id);

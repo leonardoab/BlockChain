@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\backend"
+    "\\backend",
+    "\\backend\\BlockChain.Api",
+    "\\backend\\BlockChain.Api\\Controllers"
   ],
-  "SelectedNode": "\\backend\\BlockChain.sln",
+  "SelectedNode": "\\backend\\BlockChain.Api\\Controllers\\CarteiraController.cs",
   "PreviewInSolutionExplorer": false
 }

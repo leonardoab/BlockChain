@@ -23,6 +23,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
+        [Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllUsuarioQuery()));
@@ -33,12 +34,25 @@ namespace BlockChain.Api.Controllers
         [Route("Criar")]
         public async Task<IActionResult> Criar(UsuarioInputCreateDto dto)
         {
-            var result = await this.mediator.Send(new CreateUsuarioCommand(dto));
-            return Created($"{result.Usuario.Id}", result.Usuario);
+           
+
+            try
+            {
+                var result = await this.mediator.Send(new CreateUsuarioCommand(dto));
+                if (result.Usuario == null) { return BadRequest(); }
+                else { return Created($"{result.Usuario.Id}", result.Usuario); }
+
+            }
+            catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+
+            
         }
 
         [HttpDelete]
         [Route("Deletar")]
+        [Authorize]
         public async Task<IActionResult> Deletar(UsuarioInputDeleteDto dto)
         {
             var result = await this.mediator.Send(new DeleteUsuarioCommand(dto));
@@ -50,6 +64,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPatch]
         [Route("Atualizar")]
+        [Authorize]
         public async Task<IActionResult> Atualizar(UsuarioInputUpdateDto dto)
         {
             var result = await this.mediator.Send(new UpdateUsuarioCommand(dto));
