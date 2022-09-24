@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: "https://localhost:7154/api/"
+  baseUrl: "https://blockchain.azure-api.net/api/"
 };
 
 /*

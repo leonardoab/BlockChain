@@ -3,8 +3,9 @@
     "",
     "\\backend",
     "\\backend\\BlockChain.Api",
-    "\\backend\\BlockChain.Api\\Controllers"
+    "\\backend\\BlockChain.Api\\Controllers",
+    "\\backend\\BlockChain.Application"
   ],
-  "SelectedNode": "\\backend\\BlockChain.Api\\Controllers\\CarteiraController.cs",
+  "SelectedNode": "\\backend\\BlockChain.Application\\ConfigurationModule.cs",
   "PreviewInSolutionExplorer": false
 }
