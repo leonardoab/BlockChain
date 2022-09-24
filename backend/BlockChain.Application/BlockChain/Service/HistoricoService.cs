@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlockChain.Application.BlockChain.Dto;
+using BlockChain.Domain.BlockChain;
 using BlockChain.Domain.BlockChain.Repository;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,17 @@ namespace BlockChain.Application.BlockChain.Service
             await this.historicoRepository.Delete(Historico);
 
             return this.mapper.Map<HistoricoOutputDto>(Historico);
+
+        }
+
+        public async Task<Historico> BuscarHistoricoPorId(Guid Id)
+        {
+
+            var historicos = await this.historicoRepository.FindAllByCriteria(x => x.Id == Id);
+
+            if (historicos.Count() == 1) return historicos.First();
+            else return null;
+
 
         }
 

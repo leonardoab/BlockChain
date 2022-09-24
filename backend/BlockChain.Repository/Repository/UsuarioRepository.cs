@@ -21,5 +21,17 @@ namespace BlockChain.Repository.Repository
         {
             return await this.Query.Include(x => x.Carteiras).ToListAsync();
         }
+
+
+        public async Task<IEnumerable<Usuario>> BuscarPorId(Guid id)
+        {
+            return await this.Query.Where(x => x.Id == id)
+                                   .Include(x => x.Carteiras)                                   
+                                   .ToListAsync();
+
+
+        }
+
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BlockChain.Application.BlockChain.Dto;
 using BlockChain.Application.BlockChain.Handler.Command;
 using BlockChain.Application.BlockChain.Handler.Query;
+using BlockChain.Application.BlockChain.Service;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,14 @@ namespace BlockChain.Api.Controllers
     public class HistoricoController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly ICarteiraService carteiraService;
+        private readonly IHistoricoService historicoService;
 
-        public HistoricoController(IMediator mediator)
+        public HistoricoController(IMediator mediator, ICarteiraService carteiraService, IHistoricoService historicoService)
         {
             this.mediator = mediator;
+            this.carteiraService = carteiraService;
+            this.historicoService = historicoService;
         }
 
         [HttpGet]
@@ -56,7 +61,25 @@ namespace BlockChain.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("AssociarHistoricoCarteira")]
+        public async Task<IActionResult> AssociarHistoricoCarteira(List<AssociarDto> dto)
+        {
 
+            
+
+            return Ok(await this.carteiraService.AssociarHistoricoCarteira(dto));
+            
+        }
+
+
+        [HttpPost]
+        [Route("BuscarPorId")]
+        [Authorize]
+        public async Task<IActionResult> BuscarPorId(HistoricoInputDeleteDto dto)
+        {
+            return Ok(await historicoService.BuscarHistoricoPorId(dto.Id));
+        }
 
 
 

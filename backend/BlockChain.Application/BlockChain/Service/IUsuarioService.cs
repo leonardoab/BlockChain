@@ -1,4 +1,5 @@
 ﻿using BlockChain.Application.BlockChain.Dto;
+using BlockChain.Domain.BlockChain;
 
 namespace BlockChain.Application.BlockChain.Service
 {
@@ -10,6 +11,7 @@ namespace BlockChain.Application.BlockChain.Service
         Task<UsuarioOutputDto> Deletar(UsuarioInputDeleteDto dto);
         Task<List<UsuarioOutputDto>> ObterTodos();
         Task<string> GenerateToken();
-        
+        Task<List<Usuario>> AssociarCarteiraUsuario(List<AssociarDto> dto);
+        Task<Usuario> BuscarUsuarioPorId(Guid id);
     }
 }

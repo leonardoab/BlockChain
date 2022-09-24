@@ -9,6 +9,8 @@ namespace BlockChain.Domain.BlockChain.Repository
 {
     public interface ICarteiraRepository : IRepository<Carteira>
     {
+        Task<IEnumerable<Carteira>> BuscarPorCodCarteira(string codCarteira);
+        Task<IEnumerable<Carteira>> BuscarPorId(Guid id);
         Task<IEnumerable<Carteira>> ObterTodasCarteiras();
     }
 }

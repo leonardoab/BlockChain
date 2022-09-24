@@ -1,6 +1,7 @@
 ﻿using BlockChain.Application.BlockChain.Dto;
 using BlockChain.Application.BlockChain.Handler.Command;
 using BlockChain.Application.BlockChain.Handler.Query;
+using BlockChain.Application.BlockChain.Service;
 using BlockChain.Domain.BlockChain.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,10 +16,12 @@ namespace BlockChain.Api.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IMediator mediator;
+        private readonly IUsuarioService usuarioService;
 
-        public UsuarioController(IMediator mediator)
+        public UsuarioController(IMediator mediator, IUsuarioService usuarioService)
         {
             this.mediator = mediator;
+            this.usuarioService = usuarioService;
         }
 
         [HttpGet]
@@ -72,6 +75,13 @@ namespace BlockChain.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("BuscarPorId")]
+        [Authorize]
+        public async Task<IActionResult> BuscarPorId(HistoricoInputDeleteDto dto)
+        {
+            return Ok(await usuarioService.BuscarUsuarioPorId(dto.Id));
+        }
 
 
 

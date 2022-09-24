@@ -45,6 +45,11 @@ namespace BlockChain.Application.BlockChain.Dto
         IList<Nft> Nfts);
 
 
+    public record AssociarDto(
+        Guid Pai,
+        IList<Guid> Filhos);
+
+
     ///CARTEIRA
 
     public record HistoricoInputCreateDto(

@@ -16,14 +16,16 @@ namespace BlockChain.Api.Controllers
     {
         private readonly IMediator mediator;
         private readonly ICarteiraService carteiraService;
+        private readonly IUsuarioService usuarioService;
 
-        public CarteiraController(IMediator mediator, ICarteiraService carteiraService)
+        public CarteiraController(IMediator mediator, ICarteiraService carteiraService, IUsuarioService usuarioService)
         {
             this.mediator = mediator;
             this.carteiraService = carteiraService;
+            this.usuarioService = usuarioService;
         }
 
-       
+
 
         [HttpGet]
         [Route("AtualizarCarteiras")]
@@ -75,6 +77,34 @@ namespace BlockChain.Api.Controllers
 
 
 
+        [HttpPost]
+        [Route("BuscarPorId")]
+        [Authorize]
+        public async Task<IActionResult> BuscarPorId(CarteiraInputDeleteDto dto)
+        {            
+            return Ok(await carteiraService.BuscarCarteiraPorId(dto.Id));
+        }
+
+
+        [HttpPost]
+        [Route("BuscarPorCodCarteira")]
+        [Authorize]
+        public async Task<IActionResult> BuscarPorCodCarteira(string codCarteira)
+        {
+            return Ok(await carteiraService.BuscarCarteiraPorCodCarteira(codCarteira));
+        }
+
+
+
+        [HttpPost]
+        [Route("AssociarCarteiraUsuario")]
+        public async Task<IActionResult> AssociarCarteiraUsuario(List<AssociarDto> dto)
+        {
+            return Ok(await this.usuarioService.AssociarCarteiraUsuario(dto));
+
+        }
+
+        
 
 
 

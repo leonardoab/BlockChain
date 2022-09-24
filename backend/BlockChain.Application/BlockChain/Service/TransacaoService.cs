@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlockChain.Application.BlockChain.Dto;
+using BlockChain.Domain.BlockChain;
 using BlockChain.Domain.BlockChain.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace BlockChain.Application.BlockChain.Service
 {
     public class TransacaoService : ITransacaoService
     {
-        private readonly ITransacaoRepository playlistRepository;
+        private readonly ITransacaoRepository transacaoRepository;
         private readonly IMapper mapper;
 
         public TransacaoService(ITransacaoRepository TransacaoRepository, IMapper mapper)
         {
-            this.playlistRepository = TransacaoRepository;
+            this.transacaoRepository = TransacaoRepository;
             this.mapper = mapper;
         }
 
@@ -24,7 +25,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Transacao = this.mapper.Map<Domain.BlockChain.Transacao>(dto);
 
-            await this.playlistRepository.Save(Transacao);
+            await this.transacaoRepository.Save(Transacao);
 
             return this.mapper.Map<TransacaoOutputDto>(Transacao);
 
@@ -34,7 +35,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Transacao = this.mapper.Map<Domain.BlockChain.Transacao>(dto);
 
-            await this.playlistRepository.Delete(Transacao);
+            await this.transacaoRepository.Delete(Transacao);
 
             return this.mapper.Map<TransacaoOutputDto>(Transacao);
 
@@ -44,7 +45,7 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Transacao = this.mapper.Map<Domain.BlockChain.Transacao>(dto);
 
-            await this.playlistRepository.Update(Transacao);
+            await this.transacaoRepository.Update(Transacao);
 
             return this.mapper.Map<TransacaoOutputDto>(Transacao);
 
@@ -53,9 +54,21 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<TransacaoOutputDto>> ObterTodos()
         {
-            var Transacao = await this.playlistRepository.GetAll();
+            var Transacao = await this.transacaoRepository.GetAll();
 
             return this.mapper.Map<List<TransacaoOutputDto>>(Transacao);
+        }
+
+
+        public async Task<Transacao> BuscarTransacaoPorId(Guid Id)
+        {
+
+            var historicos = await this.transacaoRepository.FindAllByCriteria(x => x.Id == Id);
+
+            if (historicos.Count() == 1) return historicos.First();
+            else return null;
+
+
         }
     }
 }

@@ -15,7 +15,7 @@ namespace BlockChain.Repository.Repository
     {
         public CarteiraRepository(BlockChainContext context) : base(context)
         {
-            
+
         }
 
         public async Task<IEnumerable<Carteira>> ObterTodasCarteiras()
@@ -24,6 +24,33 @@ namespace BlockChain.Repository.Repository
                                    .Include(x => x.Transacoes)
                                    .Include(x => x.Nfts)
                                    .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Carteira>> BuscarPorId(Guid id)
+        {
+
+
+            return await this.Query.Where(x => x.Id == id)
+                                   .Include(x => x.Historicos)
+                                   .Include(x => x.Transacoes)
+                                   .Include(x => x.Nfts)
+                                   .ToListAsync();
+
+            
+        }
+
+
+        public async Task<IEnumerable<Carteira>> BuscarPorCodCarteira(string codCarteira)
+        {
+
+
+            return await this.Query.Where(x => x.CodigoCarteira == codCarteira)
+                                   .Include(x => x.Historicos)
+                                   .Include(x => x.Transacoes)
+                                   .Include(x => x.Nfts)
+                                   .ToListAsync();
+
+
         }
     }
 }

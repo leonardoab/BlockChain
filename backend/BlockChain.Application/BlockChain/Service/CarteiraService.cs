@@ -19,13 +19,19 @@ namespace BlockChain.Application.BlockChain.Service
         private readonly IHistoricoRepository historicoRepository;
         private readonly IGenericService genericService;
         private readonly IMapper mapper;
+        private readonly IHistoricoService historicoService;
+        private readonly INftService nftService;
+        private readonly ITransacaoService transacaoService;
 
-        public CarteiraService(ICarteiraRepository CarteiraRepository, IHistoricoRepository HistoricoRepository, IGenericService GenericService, IMapper mapper)
+        public CarteiraService(ICarteiraRepository CarteiraRepository, IHistoricoRepository HistoricoRepository, IGenericService GenericService, IMapper mapper, IHistoricoService historicoService, INftService nftService, ITransacaoService transacaoService)
         {
             this.carteiraRepository = CarteiraRepository;
             this.historicoRepository = HistoricoRepository;
             this.genericService = GenericService;
             this.mapper = mapper;
+            this.historicoService = historicoService;
+            this.nftService = nftService;
+            this.transacaoService = transacaoService;
         }
 
         public async Task<CarteiraOutputDto> Criar(CarteiraInputCreateDto dto)
@@ -55,6 +61,163 @@ namespace BlockChain.Application.BlockChain.Service
             await this.carteiraRepository.Update(Carteira);
 
             return this.mapper.Map<CarteiraOutputDto>(Carteira);
+
+        }
+
+
+        public async Task<List<Carteira>> AssociarHistoricoCarteira(List<AssociarDto> dto)
+        {
+            List<Carteira> carteiras = new List<Carteira>();
+
+            for (int i = 0; i < dto.Count; i++)
+            {
+
+                var associarDto = dto[i];
+
+                Carteira carteira = await BuscarCarteiraPorId(associarDto.Pai);
+
+                if (carteira != null)
+                {
+
+                    for (int j = 0; j < associarDto.Filhos.Count; j++)
+                    {
+
+                        Historico historico = await historicoService.BuscarHistoricoPorId(associarDto.Filhos[j]);
+
+                        if (historico != null)
+                        {
+
+                            carteira.Historicos.Add(historico);
+
+                        }
+                        else return null;
+
+                    }
+
+                    await carteiraRepository.Update(carteira);
+
+                    carteiras.Add(carteira);
+
+                }
+                else return null;
+
+            }
+
+            return carteiras;
+
+        }
+
+
+
+
+        public async Task<List<Carteira>> AssociarNftCarteira(List<AssociarDto> dto)
+        {
+            List<Carteira> carteiras = new List<Carteira>();
+
+            for (int i = 0; i < dto.Count; i++)
+            {
+
+                var associarDto = dto[i];
+
+                Carteira carteira = await BuscarCarteiraPorId(associarDto.Pai);
+
+                if (carteira != null)
+                {
+
+                    for (int j = 0; j < associarDto.Filhos.Count; j++)
+                    {
+
+                        Nft nft = await nftService.BuscarNftPorId(associarDto.Filhos[j]);
+
+                        if (nft != null)
+                        {
+
+                            carteira.Nfts.Add(nft);
+
+                        }
+                        else return null;
+
+                    }
+
+                    await carteiraRepository.Update(carteira);
+
+                    carteiras.Add(carteira);
+
+                }
+                else return null;
+
+            }
+
+            return carteiras;
+
+        }
+
+
+        public async Task<List<Carteira>> AssociarTransacaoCarteira(List<AssociarDto> dto)
+        {
+
+            List<Carteira> carteiras = new List<Carteira>();
+
+            for (int i = 0; i < dto.Count; i++)
+            {
+
+                var associarDto = dto[i];
+
+                Carteira carteira = await BuscarCarteiraPorId(associarDto.Pai);
+
+                if (carteira != null)
+                {
+
+                    for (int j = 0; j < associarDto.Filhos.Count; j++)
+                    {
+
+                        Transacao transacao = await transacaoService.BuscarTransacaoPorId(associarDto.Filhos[j]);
+
+                        if (transacao != null)
+                        {
+
+                            carteira.Transacoes.Add(transacao);
+
+                        }
+                        else return null;
+
+                    }
+
+                    await carteiraRepository.Update(carteira);
+
+                    carteiras.Add(carteira);
+
+                }
+                else return null;
+
+            }
+
+            return carteiras;
+
+        }
+
+
+
+        public async Task<Carteira> BuscarCarteiraPorId(Guid id)
+        {
+
+            var carteiras = await this.carteiraRepository.BuscarPorId(id);
+
+            if (carteiras.Count() == 1) return carteiras.First();
+            else return null;
+
+
+        }
+
+
+        public async Task<Carteira> BuscarCarteiraPorCodCarteira(string codCarteira)
+        {
+
+            var carteiras = await this.carteiraRepository.BuscarPorCodCarteira(codCarteira);
+
+            if (carteiras.Count() == 1) return carteiras.First();
+            else return null;
+
 
         }
 
@@ -111,6 +274,8 @@ namespace BlockChain.Application.BlockChain.Service
                         await this.carteiraRepository.Update(carteiraEncontrada);
                     }
 
+                                   
+
 
                 }
 
@@ -151,9 +316,11 @@ namespace BlockChain.Application.BlockChain.Service
 
                 if (!result)
                 {
-                    carteiras[i].Rank = 0;
-                    await this.carteiraRepository.Update(carteiras[i]);
-                    carteirasFora.Add(carteiras[i]);
+                        //carteiras[i].Rank = 0;
+
+                        //await this.carteiraRepository.Update(carteiras[i]);
+                        carteirasFora.Add(carteiras[i]);
+                    
 
                 }
 
@@ -181,12 +348,22 @@ namespace BlockChain.Application.BlockChain.Service
 
             float diferenca = 0;
 
+            int contadorReq = 0;
+
 
 
             for (int i = 0; i < carteiras.Count; i++)
             {
 
+                if (contadorReq == 4) { 
                 Task.Delay(1000).Wait();
+                    contadorReq = 0;
+                }
+                else
+                {
+                    contadorReq++;
+
+                }
 
                 carteira = carteiras[i].CodigoCarteira;
 
@@ -231,9 +408,9 @@ namespace BlockChain.Application.BlockChain.Service
 
                     }
 
-                    catch
+                    catch (Exception ex)
                     {
-
+                        var teste = 1;
                     }
 
 

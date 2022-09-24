@@ -19,15 +19,17 @@ namespace BlockChain.Application.BlockChain.Service
 
         private readonly IUsuarioRepository usuarioRepository;
         private readonly IMapper mapper;
+        private readonly ICarteiraService carteiraService;
 
         private string jwtsecret = "ACDt1vR3lXToPQ1g3MyN";
         private string audience = "spotify-api";
         private string issuer = "http://127.0.0.1:80";
 
-        public UsuarioService(IUsuarioRepository UsuarioRepository, IMapper mapper)
+        public UsuarioService(IUsuarioRepository UsuarioRepository, IMapper mapper, ICarteiraService carteiraService)
         {
             this.usuarioRepository = UsuarioRepository;
             this.mapper = mapper;
+            this.carteiraService = carteiraService;
         }
 
         public async Task<UsuarioOutputDto> Criar(UsuarioInputCreateDto dto)
@@ -124,6 +126,63 @@ namespace BlockChain.Application.BlockChain.Service
             return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
 
         }
+
+        public async Task<List<Usuario>> AssociarCarteiraUsuario(List<AssociarDto> dto)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            for (int i = 0; i < dto.Count; i++)
+            {
+
+                var associarDto = dto[i];
+
+                Usuario usuario = await BuscarUsuarioPorId(associarDto.Pai);
+
+                if (usuario != null)
+                {
+
+                    for (int j = 0; j < associarDto.Filhos.Count; j++)
+                    {
+
+                        Carteira carteira = await carteiraService.BuscarCarteiraPorId(associarDto.Filhos[j]);
+
+                        if (carteira != null)
+                        {
+
+                            usuario.Carteiras.Add(carteira);
+
+                        }
+                        else return null;
+
+                    }
+
+                    await usuarioRepository.Update(usuario);
+
+                    usuarios.Add(usuario);
+
+                }
+                else return null;
+
+            }
+
+            return usuarios;
+
+        }
+
+
+        public async Task<Usuario> BuscarUsuarioPorId(Guid id)
+        {
+
+            var usuarios = await this.usuarioRepository.BuscarPorId(id);
+
+            if (usuarios.Count() == 1) return usuarios.First();
+            else return null;
+
+
+        }
+
+
+
     }
 }
  

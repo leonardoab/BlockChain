@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BlockChain.Application.BlockChain.Dto;
 using BlockChain.Cross.Utils;
+using BlockChain.Domain.BlockChain;
 using BlockChain.Domain.BlockChain.Repository;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,17 @@ namespace BlockChain.Application.BlockChain.Service
             var Nft = await this.nftRepository.GetAll();
 
             return this.mapper.Map<List<NftOutputDto>>(Nft);
+        }
+
+        public async Task<Nft> BuscarNftPorId(Guid Id)
+        {
+
+            var historicos = await this.nftRepository.FindAllByCriteria(x => x.Id == Id);
+
+            if (historicos.Count() == 1) return historicos.First();
+            else return null;
+
+
         }
     }
 }

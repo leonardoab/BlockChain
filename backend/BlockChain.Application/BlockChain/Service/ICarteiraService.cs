@@ -10,6 +10,10 @@ namespace BlockChain.Application.BlockChain.Service
         Task<CarteiraOutputDto> Deletar(CarteiraInputDeleteDto dto);
         Task<List<CarteiraOutputDto>> ObterTodos();        
         Task<string> AtualizarCarteiras();
-        
+        Task<List<Carteira>> AssociarHistoricoCarteira(List<AssociarDto> dto);
+        Task<Carteira> BuscarCarteiraPorCodCarteira(string codCarteira);
+        Task<Carteira> BuscarCarteiraPorId(Guid Id);
+        Task<List<Carteira>> AssociarTransacaoCarteira(List<AssociarDto> dto);
+        Task<List<Carteira>> AssociarNftCarteira(List<AssociarDto> dto);
     }
 }
