@@ -4,8 +4,10 @@
     "\\backend",
     "\\backend\\BlockChain.Api",
     "\\backend\\BlockChain.Api\\Controllers",
-    "\\backend\\BlockChain.Application"
+    "\\backend\\BlockChain.Application",
+    "\\backend\\BlockChain.Application\\BlockChain",
+    "\\backend\\BlockChain.Application\\BlockChain\\Service"
   ],
-  "SelectedNode": "\\backend\\BlockChain.Application\\ConfigurationModule.cs",
+  "SelectedNode": "\\backend\\BlockChain.Application\\BlockChain\\Service\\CarteiraService.cs",
   "PreviewInSolutionExplorer": false
 }
