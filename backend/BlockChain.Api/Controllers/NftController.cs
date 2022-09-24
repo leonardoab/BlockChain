@@ -10,7 +10,7 @@ namespace BlockChain.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class NftController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -26,6 +26,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
+        //[Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllNftQuery()));
@@ -34,6 +35,7 @@ namespace BlockChain.Api.Controllers
         //[HttpPost("{idBanda}")]
         [HttpPost]
         [Route("Criar")]
+        [Authorize]
         public async Task<IActionResult> Criar(NftInputCreateDto dto)
         {
             var result = await this.mediator.Send(new CreateNftCommand(dto));
@@ -42,6 +44,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpDelete]
         [Route("Deletar")]
+        [Authorize]
         public async Task<IActionResult> Deletar(NftInputDeleteDto dto)
         {
             var result = await this.mediator.Send(new DeleteNftCommand(dto));
@@ -53,6 +56,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPatch]
         [Route("Atualizar")]
+        [Authorize]
         public async Task<IActionResult> Atualizar(NftInputUpdateDto dto)
         {
             var result = await this.mediator.Send(new UpdateNftCommand(dto));
@@ -63,6 +67,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("AssociarNftCarteira")]
+        [Authorize]
         public async Task<IActionResult> AssociarNftCarteira(List<AssociarDto> dto)
         {
 
@@ -74,7 +79,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("BuscarPorId")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BuscarPorId(HistoricoInputDeleteDto dto)
         {
             return Ok(await nftService.BuscarNftPorId(dto.Id));

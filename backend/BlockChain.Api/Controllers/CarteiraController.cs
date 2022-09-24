@@ -37,7 +37,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
-        
+        //[Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllCarteiraQuery()));
@@ -79,7 +79,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("BuscarPorId")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BuscarPorId(CarteiraInputDeleteDto dto)
         {            
             return Ok(await carteiraService.BuscarCarteiraPorId(dto.Id));
@@ -88,7 +88,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("BuscarPorCodCarteira")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BuscarPorCodCarteira(string codCarteira)
         {
             return Ok(await carteiraService.BuscarCarteiraPorCodCarteira(codCarteira));
@@ -98,6 +98,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("AssociarCarteiraUsuario")]
+        [Authorize]
         public async Task<IActionResult> AssociarCarteiraUsuario(List<AssociarDto> dto)
         {
             return Ok(await this.usuarioService.AssociarCarteiraUsuario(dto));

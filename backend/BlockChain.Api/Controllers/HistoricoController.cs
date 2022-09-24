@@ -11,7 +11,7 @@ namespace BlockChain.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class HistoricoController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -27,6 +27,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
+        //[Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllHistoricoQuery()));
@@ -35,6 +36,7 @@ namespace BlockChain.Api.Controllers
         //[HttpPost("{idBanda}")]
         [HttpPost]
         [Route("Criar")]
+        [Authorize]
         public async Task<IActionResult> Criar(HistoricoInputCreateDto dto)
         {
             var result = await this.mediator.Send(new CreateHistoricoCommand(dto));
@@ -43,6 +45,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpDelete]
         [Route("Deletar")]
+        [Authorize]
         public async Task<IActionResult> Deletar(HistoricoInputDeleteDto dto)
         {
             var result = await this.mediator.Send(new DeleteHistoricoCommand(dto));
@@ -54,6 +57,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPatch]
         [Route("Atualizar")]
+        [Authorize]
         public async Task<IActionResult> Atualizar(HistoricoInputUpdateDto dto)
         {
             var result = await this.mediator.Send(new UpdateHistoricoCommand(dto));
@@ -63,6 +67,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("AssociarHistoricoCarteira")]
+        [Authorize]
         public async Task<IActionResult> AssociarHistoricoCarteira(List<AssociarDto> dto)
         {
 
@@ -75,7 +80,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("BuscarPorId")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BuscarPorId(HistoricoInputDeleteDto dto)
         {
             return Ok(await historicoService.BuscarHistoricoPorId(dto.Id));

@@ -26,7 +26,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpGet]
         [Route("ListarTodos")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> ListarTodos()
         {
             return Ok(await this.mediator.Send(new GetAllUsuarioQuery()));
@@ -35,6 +35,7 @@ namespace BlockChain.Api.Controllers
         //[HttpPost("{idBanda}")]
         [HttpPost]
         [Route("Criar")]
+        [Authorize]
         public async Task<IActionResult> Criar(UsuarioInputCreateDto dto)
         {
            
@@ -77,7 +78,7 @@ namespace BlockChain.Api.Controllers
 
         [HttpPost]
         [Route("BuscarPorId")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> BuscarPorId(HistoricoInputDeleteDto dto)
         {
             return Ok(await usuarioService.BuscarUsuarioPorId(dto.Id));
