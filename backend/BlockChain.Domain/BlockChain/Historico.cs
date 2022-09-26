@@ -19,10 +19,11 @@ namespace BlockChain.Domain.BlockChain
 
         public Historico()
         {
-           
+
         }
 
-        public DateTime DataHistorico { get; set; }
+        public DateTime DataHistorico { get; set; }     
+
         public string CodigoCarteira { get; set; }
         public float Saldo { get; set; }
         public float Diferenca { get; set; }

@@ -15,5 +15,7 @@ namespace BlockChain.Repository.Repository
         public HistoricoRepository(BlockChainContext context) : base(context)
         {
         }
+
+        
     }
 }

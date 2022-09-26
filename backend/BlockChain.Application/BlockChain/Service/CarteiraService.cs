@@ -263,7 +263,7 @@ namespace BlockChain.Application.BlockChain.Service
                     {
                         diferenca = float.Parse(campos[2]) - carteiraEncontrada.Saldo;
                         carteiraEncontrada.Saldo = float.Parse(campos[2]);
-                        carteiraEncontrada.DataVerificacao = DateTime.Now;
+                        carteiraEncontrada.DataVerificacao = DateTime.Now.AddHours(-3);
                         carteiraEncontrada.Rank = 1;
 
                         Historico historico = new Historico(carteiraEncontrada);
@@ -284,7 +284,7 @@ namespace BlockChain.Application.BlockChain.Service
 
                     Carteira carteiraNova = new Carteira();
                     carteiraNova.CodigoCarteira = campos[1];
-                    carteiraNova.DataVerificacao = DateTime.Now;
+                    carteiraNova.DataVerificacao = DateTime.Now.AddHours(-3);
                     carteiraNova.Saldo = float.Parse(campos[2]);
                     carteiraNova.Rank = 1;
                     carteiraNova.NumeroTransacoes = 0;
@@ -393,11 +393,11 @@ namespace BlockChain.Application.BlockChain.Service
                             historico.Diferenca = diferenca;
                             historico.Saldo = saldo;
                             historico.CodigoCarteira = carteiras[i].CodigoCarteira;
-                            historico.DataHistorico = DateTime.Now;
+                            historico.DataHistorico = DateTime.Now.AddHours(-3);
                             await this.historicoRepository.Save(historico);
 
                             carteiras[i].Saldo = saldo;
-                            carteiras[i].DataVerificacao = DateTime.Now;
+                            carteiras[i].DataVerificacao = DateTime.Now.AddHours(-3);
                             carteiras[i].Historicos.Add(historico);
                             await this.carteiraRepository.Update(carteiras[i]);
 

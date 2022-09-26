@@ -22,7 +22,7 @@ namespace BlockChain.Repository.Repository
         {
             return await this.Query.Include(x => x.Historicos)
                                    .Include(x => x.Transacoes)
-                                   .Include(x => x.Nfts)
+                                   .Include(x => x.Nfts).OrderByDescending(x => x.Saldo)
                                    .ToListAsync();
         }
 

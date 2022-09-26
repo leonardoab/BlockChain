@@ -120,7 +120,7 @@ namespace BlockChain.Application.BlockChain.Service
             var token = new JwtSecurityToken(issuer,
                audience,
                claims,
-               expires: DateTime.Now.AddMinutes(15),
+               expires: DateTime.Now.AddMinutes(100),
                signingCredentials: credentials);
 
             return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));

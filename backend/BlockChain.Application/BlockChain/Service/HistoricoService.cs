@@ -67,6 +67,33 @@ namespace BlockChain.Application.BlockChain.Service
         {
             var Historico = await this.historicoRepository.GetAll();
 
+            
+
+            Historico = Historico.OrderByDescending(x => x.DataHistorico);
+
+            /*List<Historico> historicos = (List<Historico>)Historico;
+
+            if (Historico.Count() > 0)
+            {
+
+                
+
+                int tamanho = 0;
+
+                tamanho = Historico.Count();
+
+                for (int i = 0; i < tamanho; i++)
+                {
+
+                    historicos[i].DataHistorico = historicos[i].DataHistorico.AddHours(-3);
+
+
+                }
+
+            }
+
+            historicos = (List<Historico>)historicos.OrderByDescending(x => x.DataHistorico);*/
+
             return this.mapper.Map<List<HistoricoOutputDto>>(Historico);
         }
     }
