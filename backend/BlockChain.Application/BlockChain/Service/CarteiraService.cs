@@ -468,6 +468,7 @@ namespace BlockChain.Application.BlockChain.Service
 
         public async Task<List<Carteira>> BuscarTodasCarteirasEmpresa()
         {
+            //genericService.BuscarCotacaoMafaDolar();
 
             var carteiras = await this.carteiraRepository.BuscarTodasCarteirasEmpresa();
 
@@ -480,7 +481,7 @@ namespace BlockChain.Application.BlockChain.Service
         }
 
 
-
+        
     }
 
 }
