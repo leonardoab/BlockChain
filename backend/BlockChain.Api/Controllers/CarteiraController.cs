@@ -86,7 +86,7 @@ namespace BlockChain.Api.Controllers
         }
 
 
-        [HttpPost]
+        [HttpGet]
         [Route("BuscarPorCodCarteira")]
         //[Authorize]
         public async Task<IActionResult> BuscarPorCodCarteira(string codCarteira)
