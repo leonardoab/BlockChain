@@ -75,15 +75,15 @@ namespace BlockChain.Application.BlockChain.Service
         }
 
 
-        public async Task<List<HistoricoOutputDto>> ObterHistoricosPorCodCarteira(string codCarteira)
+        public async Task<List<Historico>> ObterHistoricosPorCodCarteira(string codCarteira)
         {
             var Historico = await this.historicoRepository.BuscarPorCodCarteira(codCarteira);
 
 
-            Historico = Historico.OrderByDescending(x => x.DataHistorico);
+            
 
 
-            return this.mapper.Map<List<HistoricoOutputDto>>(Historico);
+            return (List<Historico>)Historico;
         }
     }
 }

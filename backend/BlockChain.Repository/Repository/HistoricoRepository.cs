@@ -22,6 +22,7 @@ namespace BlockChain.Repository.Repository
 
 
             return await this.Query.Where(x => x.CodigoCarteira == codCarteira)
+                                   .OrderByDescending(x => x.DataHistorico)
                                    .ToListAsync();
 
 

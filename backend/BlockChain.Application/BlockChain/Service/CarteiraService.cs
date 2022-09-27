@@ -210,12 +210,12 @@ namespace BlockChain.Application.BlockChain.Service
         }
 
 
-        public async Task<Carteira> BuscarCarteiraPorCodCarteira(string codCarteira)
+        public async Task<List<Carteira>> BuscarCarteiraPorCodCarteira(string codCarteira)
         {
 
             var carteiras = await this.carteiraRepository.BuscarPorCodCarteira(codCarteira);
 
-            if (carteiras.Count() == 1) return carteiras.First();
+            if (carteiras.Count() == 1) return (List<Carteira>)carteiras;
             else return null;
 
 
