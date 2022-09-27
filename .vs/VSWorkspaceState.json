@@ -11,6 +11,6 @@
     "\\backend\\BlockChain.Domain\\BlockChain",
     "\\backend\\BlockChain.Repository"
   ],
-  "SelectedNode": "\\backend\\BlockChain.sln",
+  "SelectedNode": "\\backend\\BlockChain.Api\\Controllers\\HistoricoController.cs",
   "PreviewInSolutionExplorer": false
 }

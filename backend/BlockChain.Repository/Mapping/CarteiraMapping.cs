@@ -25,6 +25,10 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.TipoCarteira);
             builder.Property(x => x.SaldoDiario);
 
+            builder.Property(x => x.TipoCarteiraEmpresa);
+
+            
+
            /* builder.Property(x => x.NumeroNfts);
             builder.Property(x => x.PatrimonioTotalDolar);
             builder.Property(x => x.PatrimonioTotalReal);
