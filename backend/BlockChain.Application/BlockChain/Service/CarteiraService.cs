@@ -264,7 +264,7 @@ namespace BlockChain.Application.BlockChain.Service
                         diferenca = float.Parse(campos[2]) - carteiraEncontrada.Saldo;
                         carteiraEncontrada.Saldo = float.Parse(campos[2]);
                         carteiraEncontrada.DataVerificacao = DateTime.Now.AddHours(-3);
-                        carteiraEncontrada.Rank = 1;
+                        carteiraEncontrada.Rank = 0;
 
                         Historico historico = new Historico(carteiraEncontrada);
                         historico.Diferenca = diferenca;
@@ -286,7 +286,7 @@ namespace BlockChain.Application.BlockChain.Service
                     carteiraNova.CodigoCarteira = campos[1];
                     carteiraNova.DataVerificacao = DateTime.Now.AddHours(-3);
                     carteiraNova.Saldo = float.Parse(campos[2]);
-                    carteiraNova.Rank = 1;
+                    carteiraNova.Rank = 0;
                     carteiraNova.NumeroTransacoes = 0;
                     carteiraNova.TipoCarteira = "Privada";
 

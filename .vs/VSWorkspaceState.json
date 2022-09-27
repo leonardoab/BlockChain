@@ -11,6 +11,6 @@
     "\\backend\\BlockChain.Domain\\BlockChain",
     "\\backend\\BlockChain.Repository"
   ],
-  "SelectedNode": "\\backend\\BlockChain.Domain\\BlockChain\\Carteira.cs",
+  "SelectedNode": "\\backend\\BlockChain.sln",
   "PreviewInSolutionExplorer": false
 }
