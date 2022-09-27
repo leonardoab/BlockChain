@@ -395,7 +395,8 @@ namespace BlockChain.Application.BlockChain.Service
                             historico.Saldo = saldo;
                             historico.CodigoCarteira = carteiras[i].CodigoCarteira;
                             historico.DataHistorico = DateTime.Now.AddHours(-3);
-                            await this.historicoRepository.Save(historico);
+                            historico.TipoCarteira = "";
+                           await this.historicoRepository.Save(historico);
 
                             carteiras[i].Saldo = saldo;
                             carteiras[i].DataVerificacao = DateTime.Now.AddHours(-3);
