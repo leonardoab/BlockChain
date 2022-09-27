@@ -15,5 +15,8 @@ namespace BlockChain.Application.BlockChain.Service
         Task<Carteira> BuscarCarteiraPorId(Guid Id);
         Task<List<Carteira>> AssociarTransacaoCarteira(List<AssociarDto> dto);
         Task<List<Carteira>> AssociarNftCarteira(List<AssociarDto> dto);
+        Task<List<Carteira>> BuscarTodasCarteirasEmpresa();
+        Task<List<Carteira>> BuscarTodasCarteirasPrivada();
+        Task<List<Carteira>> BuscarTodasCarteirasTodosTipos();
     }
 }

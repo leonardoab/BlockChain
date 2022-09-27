@@ -25,7 +25,18 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.TipoCarteira);
             builder.Property(x => x.SaldoDiario);
 
-            builder.HasMany(x => x.Transacoes).WithOne();
+           /* builder.Property(x => x.NumeroNfts);
+            builder.Property(x => x.PatrimonioTotalDolar);
+            builder.Property(x => x.PatrimonioTotalReal);
+            builder.Property(x => x.PatrimonioTotalMafaDolar);
+            builder.Property(x => x.PatrimonioTotalMafaReal);
+            builder.Property(x => x.CotacaoDolar);
+            builder.Property(x => x.CotacaoMafa);
+            builder.Property(x => x.TipoCarteiraEmpresa);   */    
+
+
+
+        builder.HasMany(x => x.Transacoes).WithOne();
             builder.HasMany(x => x.Historicos).WithOne();
             builder.HasMany(x => x.Nfts).WithOne();
         }

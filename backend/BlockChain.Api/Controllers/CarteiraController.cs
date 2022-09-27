@@ -105,7 +105,35 @@ namespace BlockChain.Api.Controllers
 
         }
 
-        
+
+        [HttpGet]
+        [Route("TodasCarteirasTodosTipos")]
+        //[Authorize]
+        public async Task<IActionResult> TodasCarteirasTodosTipos()
+        {
+            return Ok(await this.carteiraService.BuscarTodasCarteirasTodosTipos());
+        }
+
+
+        [HttpGet]
+        [Route("TodasCarteirasPrivada")]
+        //[Authorize]
+        public async Task<IActionResult> TodasCarteirasPrivada()
+        {
+            return Ok(await this.carteiraService.BuscarTodasCarteirasPrivada());
+        }
+
+        [HttpGet]
+        [Route("TodasCarteirasEmpresa")]
+        //[Authorize]
+        public async Task<IActionResult> TodasCarteirasEmpresa()
+        {
+            return Ok(await this.carteiraService.BuscarTodasCarteirasEmpresa());
+        }
+
+
+
+
 
 
 

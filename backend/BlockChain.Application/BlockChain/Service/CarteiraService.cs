@@ -274,7 +274,7 @@ namespace BlockChain.Application.BlockChain.Service
                         await this.carteiraRepository.Update(carteiraEncontrada);
                     }
 
-                                   
+
 
 
                 }
@@ -316,11 +316,11 @@ namespace BlockChain.Application.BlockChain.Service
 
                 if (!result)
                 {
-                        //carteiras[i].Rank = 0;
+                    //carteiras[i].Rank = 0;
 
-                        //await this.carteiraRepository.Update(carteiras[i]);
-                        carteirasFora.Add(carteiras[i]);
-                    
+                    //await this.carteiraRepository.Update(carteiras[i]);
+                    carteirasFora.Add(carteiras[i]);
+
 
                 }
 
@@ -355,8 +355,9 @@ namespace BlockChain.Application.BlockChain.Service
             for (int i = 0; i < carteiras.Count; i++)
             {
 
-                if (contadorReq == 4) { 
-                Task.Delay(1000).Wait();
+                if (contadorReq == 4)
+                {
+                    Task.Delay(1000).Wait();
                     contadorReq = 0;
                 }
                 else
@@ -425,6 +426,61 @@ namespace BlockChain.Application.BlockChain.Service
 
 
         }
+
+
+        public async Task<List<Carteira>> BuscarTodasCarteirasTodosTipos()
+        {           
+
+            var carteiras = await this.carteiraRepository.BuscarTodasCarteirasTodosTipos();
+
+            var carteirasOrdenadas = new List<Carteira>();
+
+            carteirasOrdenadas = (List<Carteira>)carteiras;
+
+
+            for (int i = 0; i < 500; i++)
+            {
+                carteirasOrdenadas[i].Rank = i + 1;
+            }
+
+            return carteirasOrdenadas;
+
+        }
+
+        public async Task<List<Carteira>> BuscarTodasCarteirasPrivada()
+        {
+
+            var carteiras = await this.carteiraRepository.BuscarTodasCarteirasPrivada();
+
+            var carteirasOrdenadas = new List<Carteira>();
+
+            carteirasOrdenadas = (List<Carteira>)carteiras;
+
+
+            for (int i = 0; i < 100; i++)
+            {
+                carteirasOrdenadas[i].Rank = i + 1;
+            }
+
+            return carteirasOrdenadas;
+
+        }
+
+        public async Task<List<Carteira>> BuscarTodasCarteirasEmpresa()
+        {
+
+            var carteiras = await this.carteiraRepository.BuscarTodasCarteirasEmpresa();
+
+            var carteirasOrdenadas = new List<Carteira>();
+
+            carteirasOrdenadas = (List<Carteira>)carteiras;            
+
+            return carteirasOrdenadas;
+
+        }
+
+
+
     }
 
 }

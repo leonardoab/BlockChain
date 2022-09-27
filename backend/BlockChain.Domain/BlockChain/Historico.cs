@@ -28,5 +28,19 @@ namespace BlockChain.Domain.BlockChain
         public float Saldo { get; set; }
         public float Diferenca { get; set; }
         public int NumeroTransacoes { get; set; }
+
+
+        /*public int NumeroNfts { get; set; }
+        public float CotacaoDolar { get; set; }
+        public float CotacaoMafa { get; set; }
+        public string TipoCarteira { get; set; }
+        public string TipoCarteiraEmpresa { get; set; }
+        public string TipoTransacao { get; set; }
+        public string ValorTransacaoReal { get; set; }
+        public string ValorTransacaoDolar { get; set; }*/
+
+
+
+
     }
 }

@@ -7,8 +7,10 @@
     "\\backend\\BlockChain.Application",
     "\\backend\\BlockChain.Application\\BlockChain",
     "\\backend\\BlockChain.Application\\BlockChain\\Service",
-    "\\backend\\BlockChain.Domain"
+    "\\backend\\BlockChain.Domain",
+    "\\backend\\BlockChain.Domain\\BlockChain",
+    "\\backend\\BlockChain.Repository"
   ],
-  "SelectedNode": "\\backend\\BlockChain.Api\\Controllers\\NftController.cs",
+  "SelectedNode": "\\backend\\BlockChain.Domain\\BlockChain\\Carteira.cs",
   "PreviewInSolutionExplorer": false
 }

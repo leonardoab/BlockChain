@@ -24,9 +24,18 @@ namespace BlockChain.Repository.Mapping
             builder.Property(x => x.NumeroTransacoes);
             builder.Property(x => x.Diferenca);
 
+           /* builder.Property(x => x.NumeroNfts);
+            builder.Property(x => x.CotacaoDolar);
+            builder.Property(x => x.CotacaoMafa);
+            builder.Property(x => x.TipoCarteira);
+            builder.Property(x => x.TipoCarteiraEmpresa);
+            builder.Property(x => x.TipoTransacao);
+            builder.Property(x => x.ValorTransacaoReal);
+            builder.Property(x => x.ValorTransacaoDolar);   */      
 
 
 
-        }
+
+    }
     }
 }

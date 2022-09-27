@@ -11,6 +11,9 @@ namespace BlockChain.Domain.BlockChain.Repository
     {
         Task<IEnumerable<Carteira>> BuscarPorCodCarteira(string codCarteira);
         Task<IEnumerable<Carteira>> BuscarPorId(Guid id);
+        Task<IEnumerable<Carteira>> BuscarTodasCarteirasEmpresa();
+        Task<IEnumerable<Carteira>> BuscarTodasCarteirasPrivada();
+        Task<IEnumerable<Carteira>> BuscarTodasCarteirasTodosTipos();
         Task<IEnumerable<Carteira>> ObterTodasCarteiras();
     }
 }

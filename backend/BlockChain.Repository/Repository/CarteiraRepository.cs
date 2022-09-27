@@ -52,5 +52,40 @@ namespace BlockChain.Repository.Repository
 
 
         }
+
+        public async Task<IEnumerable<Carteira>> BuscarTodasCarteirasTodosTipos()
+        {
+
+
+            return await this.Query.Where(x => x.Saldo > 0)
+                                   .OrderByDescending(x => x.Saldo)
+                                   .ToListAsync();
+
+
+        }
+
+
+        public async Task<IEnumerable<Carteira>> BuscarTodasCarteirasPrivada()
+        {
+
+
+            return await this.Query.Where(x => x.Saldo > 0 && x.TipoCarteira.Equals("Privada"))
+                                   .OrderByDescending(x => x.Saldo)
+                                   .ToListAsync();
+
+
+        }
+
+        public async Task<IEnumerable<Carteira>> BuscarTodasCarteirasEmpresa()
+        {
+
+
+            return await this.Query.Where(x => x.Saldo > 0 && !x.TipoCarteira.Equals("Privada"))
+                                   .OrderByDescending(x => x.Saldo)
+                                   .ToListAsync();
+
+
+        }
+
     }
 }

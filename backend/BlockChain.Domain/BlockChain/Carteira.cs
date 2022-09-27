@@ -26,6 +26,18 @@ namespace BlockChain.Domain.BlockChain
         public IList<Historico> Historicos { get; set; }
         public IList<Transacao> Transacoes { get; set; }
         public IList<Nft> Nfts { get; set; }
+
+        /*public int NumeroNfts { get; set; }
+        public float PatrimonioTotalDolar { get; set; }
+        public float PatrimonioTotalReal { get; set; }
+        public float PatrimonioTotalMafaDolar { get; set; }
+        public float PatrimonioTotalMafaReal { get; set; }
+        public float CotacaoDolar { get; set; }
+        public float CotacaoMafa { get; set; }
+        public string TipoCarteiraEmpresa { get; set; }*/
+
+
         //public string nft
     }
 }
+
