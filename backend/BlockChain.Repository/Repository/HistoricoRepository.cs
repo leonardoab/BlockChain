@@ -2,6 +2,7 @@
 using BlockChain.Domain.BlockChain.Repository;
 using BlockChain.Repository.Context;
 using BlockChain.Repository.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace BlockChain.Repository.Repository
         {
         }
 
-        
+        public async Task<IEnumerable<Historico>> BuscarPorCodCarteira(string codCarteira)
+        {
+
+
+            return await this.Query.Where(x => x.CodigoCarteira == codCarteira)
+                                   .ToListAsync();
+
+
+        }
+
     }
 }

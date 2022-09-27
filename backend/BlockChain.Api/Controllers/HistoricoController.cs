@@ -87,6 +87,15 @@ namespace BlockChain.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("BuscarPorCodCarteira")]
+        //[Authorize]
+        public async Task<IActionResult> BuscarPorCodCarteira(string codCarteira)
+        {
+            return Ok(await historicoService.ObterHistoricosPorCodCarteira(codCarteira));
+        }
+
+
 
 
     }

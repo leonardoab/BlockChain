@@ -66,33 +66,22 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<List<HistoricoOutputDto>> ObterTodos()
         {
             var Historico = await this.historicoRepository.GetAll();
-
             
 
             Historico = Historico.OrderByDescending(x => x.DataHistorico);
+           
 
-            /*List<Historico> historicos = (List<Historico>)Historico;
-
-            if (Historico.Count() > 0)
-            {
-
-                
-
-                int tamanho = 0;
-
-                tamanho = Historico.Count();
-
-                for (int i = 0; i < tamanho; i++)
-                {
-
-                    historicos[i].DataHistorico = historicos[i].DataHistorico.AddHours(-3);
+            return this.mapper.Map<List<HistoricoOutputDto>>(Historico);
+        }
 
 
-                }
+        public async Task<List<HistoricoOutputDto>> ObterHistoricosPorCodCarteira(string codCarteira)
+        {
+            var Historico = await this.historicoRepository.BuscarPorCodCarteira(codCarteira);
 
-            }
 
-            historicos = (List<Historico>)historicos.OrderByDescending(x => x.DataHistorico);*/
+            Historico = Historico.OrderByDescending(x => x.DataHistorico);
+
 
             return this.mapper.Map<List<HistoricoOutputDto>>(Historico);
         }

@@ -9,6 +9,7 @@ namespace BlockChain.Application.BlockChain.Service
         Task<Historico> BuscarHistoricoPorId(Guid Id);
         Task<HistoricoOutputDto> Criar(HistoricoInputCreateDto dto);
         Task<HistoricoOutputDto> Deletar(HistoricoInputDeleteDto dto);
+        Task<List<HistoricoOutputDto>> ObterHistoricosPorCodCarteira(string codCarteira);
         Task<List<HistoricoOutputDto>> ObterTodos();
     }
 }
