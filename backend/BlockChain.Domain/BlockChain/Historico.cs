@@ -15,6 +15,15 @@ namespace BlockChain.Domain.BlockChain
             CodigoCarteira = carteira.CodigoCarteira;
             Saldo = carteira.Saldo;
             NumeroTransacoes = carteira.NumeroTransacoes;
+            TipoCarteira = carteira.TipoCarteira;
+
+            CotacaoMafaDolar = 0;
+                CotacaoMafaReal = 0;
+            CotacaoDolar = 0;
+            ValorTransacaoReal = 0;
+            ValorTransacaoDolar = 0;
+            TipoCarteiraEmpresa = "";
+            TipoTransacao = "";
         }
 
         public Historico()
@@ -29,12 +38,14 @@ namespace BlockChain.Domain.BlockChain
         public float Diferenca { get; set; }
         public int NumeroTransacoes { get; set; }
 
-         public float CotacaoMafaDolar { get; set; }
-         public float CotacaoMafaReal { get; set; }
-         public float CotacaoDolar { get; set; }
-        public string ValorTransacaoReal { get; set; }
-        public string ValorTransacaoDolar { get; set; }
         public string TipoCarteira { get; set; }
+
+        public float CotacaoMafaDolar { get; set; }
+        public float CotacaoMafaReal { get; set; }
+        public float CotacaoDolar { get; set; }
+        public float ValorTransacaoReal { get; set; }
+        public float ValorTransacaoDolar { get; set; }
+        
         public string TipoCarteiraEmpresa { get; set; }
         public string TipoTransacao { get; set; }
         
