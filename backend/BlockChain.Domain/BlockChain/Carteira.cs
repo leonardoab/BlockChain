@@ -14,7 +14,7 @@ namespace BlockChain.Domain.BlockChain
             Historicos = new List<Historico>();
             Transacoes = new List<Transacao>();
             Nfts = new List<Nft>();
-            TipoCarteiraEmpresa = "";
+            
         }
 
         public string CodigoCarteira { get; set; }

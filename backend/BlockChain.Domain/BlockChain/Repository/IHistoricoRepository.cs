@@ -9,6 +9,7 @@ namespace BlockChain.Domain.BlockChain.Repository
 {
     public interface IHistoricoRepository : IRepository<Historico>
     {
+        Task<IEnumerable<Historico>> BuscarPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens);
         Task<IEnumerable<Historico>> BuscarPorCodCarteira(string codCarteira);
     }
 }

@@ -95,6 +95,14 @@ namespace BlockChain.Api.Controllers
             return Ok(await historicoService.ObterHistoricosPorCodCarteira(codCarteira));
         }
 
+        [HttpGet]
+        [Route("BuscarPorHistoricoPersonalizado")]
+        //[Authorize]
+        public async Task<IActionResult> BuscarPorHistoricoPersonalizado(string ?TipoCarteira,string ?DataInico,string ?DataFim,int numeroTokens)
+        {
+            return Ok(await historicoService.BuscarPorHistoricoPersonalizado(TipoCarteira, DataInico, DataFim, numeroTokens));
+        }
+
 
 
 

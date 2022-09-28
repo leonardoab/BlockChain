@@ -2,15 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\backend",
-    "\\backend\\BlockChain.Api",
-    "\\backend\\BlockChain.Api\\Controllers",
     "\\backend\\BlockChain.Application",
     "\\backend\\BlockChain.Application\\BlockChain",
-    "\\backend\\BlockChain.Application\\BlockChain\\Service",
-    "\\backend\\BlockChain.Domain",
-    "\\backend\\BlockChain.Domain\\BlockChain",
-    "\\backend\\BlockChain.Repository"
+    "\\backend\\BlockChain.Application\\BlockChain\\Service"
   ],
-  "SelectedNode": "\\backend\\BlockChain.Api\\Controllers\\HistoricoController.cs",
+  "SelectedNode": "\\backend\\BlockChain.Application\\BlockChain\\Service\\GenericService.cs",
   "PreviewInSolutionExplorer": false
 }

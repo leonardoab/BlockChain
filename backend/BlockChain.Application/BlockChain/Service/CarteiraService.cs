@@ -233,6 +233,10 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<string> AtualizarCarteiras()
         {
 
+            float CotacaoMafaDolar = await genericService.BuscarCotacaoMafaDolar();
+            float CotacaoMafaReal = await genericService.BuscarCotacaoMafaReal();
+            float CotacaoDolar = CotacaoMafaReal / CotacaoMafaDolar;
+
             IList<String> linhasTabela = await genericService.BuscarTabela("https://bscscan.com/token/tokenholderchart/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a?range=500");
 
             linhasTabela.RemoveAt(497);
@@ -268,6 +272,13 @@ namespace BlockChain.Application.BlockChain.Service
 
                         Historico historico = new Historico(carteiraEncontrada);
                         historico.Diferenca = diferenca;
+                        historico.CotacaoMafaDolar = CotacaoMafaDolar;
+                        historico.CotacaoMafaReal = CotacaoMafaReal;
+                        historico.CotacaoDolar = CotacaoDolar;
+                        historico.ValorTransacaoReal = CotacaoMafaReal * diferenca;
+                        historico.ValorTransacaoDolar = CotacaoMafaDolar * diferenca;
+                        historico.TipoTransacao = "";
+
                         await this.historicoRepository.Save(historico);
 
                         carteiraEncontrada.Historicos.Add(historico);
@@ -289,11 +300,20 @@ namespace BlockChain.Application.BlockChain.Service
                     carteiraNova.Rank = 0;
                     carteiraNova.NumeroTransacoes = 0;
                     carteiraNova.TipoCarteira = "Privada";
+                    carteiraNova.TipoCarteiraEmpresa = "";
 
                     await this.carteiraRepository.Save(carteiraNova);
 
                     Historico historico = new Historico(carteiraNova);
+
                     historico.Diferenca = carteiraNova.Saldo;
+                    historico.CotacaoMafaDolar = CotacaoMafaDolar;
+                    historico.CotacaoMafaReal = CotacaoMafaReal;
+                    historico.CotacaoDolar = CotacaoDolar;
+                    historico.ValorTransacaoReal = CotacaoMafaReal * diferenca;
+                    historico.ValorTransacaoDolar = CotacaoMafaDolar * diferenca;
+                    historico.TipoTransacao = "";
+
 
                     await this.historicoRepository.Save(historico);
 
@@ -327,14 +347,14 @@ namespace BlockChain.Application.BlockChain.Service
 
             }
 
-            await BuscarSaldosCarteirasAPI(carteirasFora);
+            await BuscarSaldosCarteirasAPI(carteirasFora, CotacaoMafaDolar, CotacaoMafaReal, CotacaoDolar);
 
 
             return "Sucesso";
         }
 
 
-        public async Task<string> BuscarSaldosCarteirasAPI(IList<Carteira> carteiras)
+        public async Task<string> BuscarSaldosCarteirasAPI(IList<Carteira> carteiras,float CotacaoMafaDolar,float CotacaoMafaReal,float CotacaoDolar)
         {
             //string uri = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0x6Dd60AFB2586D31Bf390450aDf5E6A9659d48c4A&address=0xdbd8e899c2b2aa8c1da54c824fea17d58e082465&tag=latest&apikey=MPQA8WX7TMPXWCCBM16HSZDPIP2YQNXHQA";
 
@@ -389,15 +409,19 @@ namespace BlockChain.Application.BlockChain.Service
                         if (carteiras[i].Saldo != saldo)
                         {
                             diferenca = saldo - carteiras[i].Saldo;
-                            Historico historico = new Historico();
-                            historico.NumeroTransacoes = 0;
+                            Historico historico = new Historico(carteiras[i]);                            
                             historico.Diferenca = diferenca;
-                            historico.Saldo = saldo;
-                            historico.CodigoCarteira = carteiras[i].CodigoCarteira;
                             historico.DataHistorico = DateTime.Now.AddHours(-3);
-                            historico.TipoCarteira = "";
-                            historico.TipoCarteiraEmpresa = "";
+                            historico.CotacaoMafaDolar = CotacaoMafaDolar;
+                            historico.CotacaoMafaReal = CotacaoMafaReal;
+                            historico.CotacaoDolar = CotacaoDolar;
+                            historico.ValorTransacaoReal = CotacaoMafaReal * diferenca;
+                            historico.ValorTransacaoDolar = CotacaoMafaDolar * diferenca;
                             historico.TipoTransacao = "";
+
+
+
+
                             await this.historicoRepository.Save(historico);
 
                             carteiras[i].Saldo = saldo;

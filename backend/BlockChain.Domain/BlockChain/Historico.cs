@@ -16,14 +16,9 @@ namespace BlockChain.Domain.BlockChain
             Saldo = carteira.Saldo;
             NumeroTransacoes = carteira.NumeroTransacoes;
             TipoCarteira = carteira.TipoCarteira;
+            TipoCarteiraEmpresa = carteira.TipoCarteiraEmpresa;
 
-            CotacaoMafaDolar = 0;
-                CotacaoMafaReal = 0;
-            CotacaoDolar = 0;
-            ValorTransacaoReal = 0;
-            ValorTransacaoDolar = 0;
-            TipoCarteiraEmpresa = "";
-            TipoTransacao = "";
+            
         }
 
         public Historico()

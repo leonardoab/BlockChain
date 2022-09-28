@@ -93,34 +93,38 @@ namespace BlockChain.Application.BlockChain.Service
 
             HttpClient client = new HttpClient();
 
-            client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.29.2");
-            //client.DefaultRequestHeaders.Add("accept-language", "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6,zh;q=0.5");
-            //client.DefaultRequestHeaders.Add("Accept", "text/html");
+            //client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.29.2");
+            //client.DefaultRequestHeaders.Add("Accept", "*/*");
+            //client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             //client.DefaultRequestHeaders.Add("Connection", "keep-alive");
+
+            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "fb87ff96-d4b1-41b6-8487-ce1e2d1f6053");
 
             float valor = 0;
 
-            HttpResponseMessage response = await client.GetAsync("https://coinmarketcap.com/currencies/mafagafo/");
+            HttpResponseMessage response = await client.GetAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=MAFA&convert=USD");
             if (response.IsSuccessStatusCode)
             {
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
+                //var inicio = responseBody.IndexOf("<div class=\"priceValue \">");
 
-                var inicio = responseBody.IndexOf("<div class=\"priceValue \">");
+                //responseBody = responseBody.Substring(inicio, 100);
 
-                responseBody = responseBody.Substring(inicio, 100);
+                var inicio = responseBody.IndexOf("\"price\":");
+                var fim = responseBody.IndexOf(",\"volume_24h\"");
 
-                inicio = responseBody.IndexOf("$");
-                var fim = responseBody.IndexOf("</span>");
-
-                responseBody = responseBody.Substring((inicio + 1), fim - (inicio + 1));
+                responseBody = responseBody.Substring(inicio + 8, fim - (inicio + 8));
+                responseBody = responseBody.Substring(0, responseBody.IndexOf(".") + 4);
 
 
                 try
                 {
-                    responseBody = responseBody.Replace(".", ",");
+                    //responseBody = responseBody.Replace(".", ",");
                     valor = float.Parse(responseBody);
+
+                    //valor = (float)Math.Truncate((decimal)valor);
 
                 }
                 catch
@@ -143,33 +147,38 @@ namespace BlockChain.Application.BlockChain.Service
 
             HttpClient client = new HttpClient();
 
-            client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.29.2");
+            //client.DefaultRequestHeaders.Add("User-Agent", "PostmanRuntime/7.29.2");
             //client.DefaultRequestHeaders.Add("Accept", "*/*");
             //client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             //client.DefaultRequestHeaders.Add("Connection", "keep-alive");
 
+            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "fb87ff96-d4b1-41b6-8487-ce1e2d1f6053");
+
             float valor = 0;
 
-            HttpResponseMessage response = await client.GetAsync("https://coinmarketcap.com/pt-br/currencies/mafagafo");
+            HttpResponseMessage response = await client.GetAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=MAFA&convert=BRL");
             if (response.IsSuccessStatusCode)
             {
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                var inicio = responseBody.IndexOf("<div class=\"priceValue \">");
+                //var inicio = responseBody.IndexOf("<div class=\"priceValue \">");
 
-                responseBody = responseBody.Substring(inicio, 100);
+                //responseBody = responseBody.Substring(inicio, 100);
 
-                inicio = responseBody.IndexOf("R$");
-                var fim = responseBody.IndexOf("</span>");
+                var inicio = responseBody.IndexOf("\"price\":");
+                var fim = responseBody.IndexOf(",\"volume_24h\"");
 
-                responseBody = responseBody.Substring((inicio + 2), fim - (inicio + 2));
+                responseBody = responseBody.Substring(inicio + 8 , fim - (inicio + 8));
+                responseBody = responseBody.Substring(0, responseBody.IndexOf(".") + 4);
 
 
                 try
                 {
-                    responseBody = responseBody.Replace(".", ",");
+                    //responseBody = responseBody.Replace(".", ",");
                     valor = float.Parse(responseBody);
+
+                    //valor = (float)Math.Truncate((decimal)valor);
 
                 }
                 catch

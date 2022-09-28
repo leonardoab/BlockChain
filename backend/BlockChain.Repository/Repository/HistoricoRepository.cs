@@ -28,5 +28,50 @@ namespace BlockChain.Repository.Repository
 
         }
 
+        public async Task<IEnumerable<Historico>> BuscarPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens)
+        {
+
+            if (TipoCarteira != null && TipoCarteira.Equals("Empresa") && DataInico == null)
+            {
+
+                return await this.Query.Where(x => x.TipoCarteira != "Privada")
+                                  .OrderByDescending(x => x.DataHistorico).Take(200)
+                                  .ToListAsync();
+
+            }
+            else if (TipoCarteira != null && TipoCarteira.Equals("Privada") && DataInico == null)
+            {
+
+                return await this.Query.Where(x => x.TipoCarteira == "Privada")
+                                  .OrderByDescending(x => x.DataHistorico).Take(200)
+                                  .ToListAsync();
+
+            }
+            else if (numeroTokens != 0)
+            {
+
+                return await this.Query.Where(x => (x.Diferenca > numeroTokens && x.Diferenca > 0) || (x.Diferenca < (numeroTokens * -1)  && x.Diferenca < 0))
+                                  .OrderByDescending(x => x.DataHistorico).Take(200)
+                                  .ToListAsync();
+
+            }
+            else {
+                return await this.Query
+                                     .OrderByDescending(x => x.DataHistorico).Take(200)
+                                     .ToListAsync();
+
+
+            }
+
+
+
+
+
+
+            
+        }
+
+
+
+        }
     }
-}

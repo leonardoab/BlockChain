@@ -76,7 +76,15 @@ namespace BlockChain.Application.BlockChain.Dto
         string CodigoCarteira,
         float Saldo,
         int NumeroTransacoes,
-        float Diferenca);
+        float Diferenca,
+        string TipoCarteira,
+        float ValorTransacaoReal
+
+
+
+
+
+        );
 
     /// HISTORICO    
 

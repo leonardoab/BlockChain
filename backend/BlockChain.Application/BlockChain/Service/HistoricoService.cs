@@ -75,6 +75,18 @@ namespace BlockChain.Application.BlockChain.Service
         }
 
 
+
+        public async Task<List<Historico>> BuscarPorHistoricoPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens) {
+
+            
+            var historicos = await this.historicoRepository.BuscarPersonalizado(TipoCarteira, DataInico, DataFim, numeroTokens);
+
+            return (List<Historico>)historicos;
+
+
+        }
+
+
         public async Task<List<Historico>> ObterHistoricosPorCodCarteira(string codCarteira)
         {
             var Historico = await this.historicoRepository.BuscarPorCodCarteira(codCarteira);
