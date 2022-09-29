@@ -301,6 +301,7 @@ namespace BlockChain.Application.BlockChain.Service
                     carteiraNova.NumeroTransacoes = 0;
                     carteiraNova.TipoCarteira = "Privada";
                     carteiraNova.TipoCarteiraEmpresa = "";
+                    diferenca = carteiraNova.Saldo;
 
                     await this.carteiraRepository.Save(carteiraNova);
 
