@@ -97,5 +97,18 @@ namespace BlockChain.Application.BlockChain.Service
 
             return (List<Historico>)Historico;
         }
+
+
+        public async Task<List<Historico>> ObterCotacao()
+        {
+            var Historico = await this.historicoRepository.BuscarUltimaCotacao();
+
+
+            
+
+
+            return (List<Historico>)Historico;
+        }
+
     }
 }

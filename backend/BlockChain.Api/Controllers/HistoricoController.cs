@@ -103,6 +103,12 @@ namespace BlockChain.Api.Controllers
             return Ok(await historicoService.BuscarPorHistoricoPersonalizado(TipoCarteira, DataInico, DataFim, numeroTokens));
         }
 
+        [HttpGet]
+        [Route("BuscarUltimaCotacao")]
+        public async Task<IActionResult> BuscarUltimaCotacao()
+        {
+            return Ok(await historicoService.ObterCotacao());
+        }
 
 
 

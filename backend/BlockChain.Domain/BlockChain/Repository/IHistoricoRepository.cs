@@ -11,5 +11,6 @@ namespace BlockChain.Domain.BlockChain.Repository
     {
         Task<IEnumerable<Historico>> BuscarPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens);
         Task<IEnumerable<Historico>> BuscarPorCodCarteira(string codCarteira);
+        Task<IEnumerable<Historico>> BuscarUltimaCotacao();
     }
 }

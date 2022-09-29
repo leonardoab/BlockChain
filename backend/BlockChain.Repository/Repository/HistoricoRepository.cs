@@ -28,6 +28,20 @@ namespace BlockChain.Repository.Repository
 
         }
 
+
+         public async Task<IEnumerable<Historico>> BuscarUltimaCotacao()
+        {
+           
+
+            
+
+            return await this.Query.OrderByDescending(x => x.DataHistorico).Take(1)
+                                   .ToListAsync();
+
+
+
+        }
+
         public async Task<IEnumerable<Historico>> BuscarPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens)
         {
 

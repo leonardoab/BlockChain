@@ -3,8 +3,12 @@
     "",
     "\\BlockChain.Application",
     "\\BlockChain.Application\\BlockChain",
-    "\\BlockChain.Application\\BlockChain\\Service"
+    "\\BlockChain.Application\\BlockChain\\Service",
+    "\\BlockChain.Domain",
+    "\\BlockChain.Domain\\BlockChain",
+    "\\BlockChain.Repository",
+    "\\BlockChain.Repository\\Repository"
   ],
-  "SelectedNode": "\\BlockChain.Application\\BlockChain\\Service\\CarteiraService.cs",
+  "SelectedNode": "\\BlockChain.Repository\\Repository\\HistoricoRepository.cs",
   "PreviewInSolutionExplorer": false
 }

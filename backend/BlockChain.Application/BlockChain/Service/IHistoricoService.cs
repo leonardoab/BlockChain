@@ -10,6 +10,7 @@ namespace BlockChain.Application.BlockChain.Service
         Task<List<Historico>> BuscarPorHistoricoPersonalizado(string TipoCarteira, string DataInico, string DataFim, int numeroTokens);
         Task<HistoricoOutputDto> Criar(HistoricoInputCreateDto dto);
         Task<HistoricoOutputDto> Deletar(HistoricoInputDeleteDto dto);
+        Task<List<Historico>> ObterCotacao();
         Task<List<Historico>> ObterHistoricosPorCodCarteira(string codCarteira);
         Task<List<HistoricoOutputDto>> ObterTodos();
     }
