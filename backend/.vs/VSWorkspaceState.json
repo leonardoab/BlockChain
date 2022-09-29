@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BlockChain.Application",
+    "\\BlockChain.Application\\BlockChain",
+    "\\BlockChain.Application\\BlockChain\\Service"
+  ],
+  "SelectedNode": "\\BlockChain.Application\\BlockChain\\Service\\CarteiraService.cs",
+  "PreviewInSolutionExplorer": false
+}

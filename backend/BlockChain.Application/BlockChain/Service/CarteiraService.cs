@@ -409,6 +409,10 @@ namespace BlockChain.Application.BlockChain.Service
                         if (carteiras[i].Saldo != saldo)
                         {
                             diferenca = saldo - carteiras[i].Saldo;
+
+                            carteiras[i].Saldo = saldo;
+                            carteiras[i].DataVerificacao = DateTime.Now.AddHours(-3);
+
                             Historico historico = new Historico(carteiras[i]);                            
                             historico.Diferenca = diferenca;
                             historico.DataHistorico = DateTime.Now.AddHours(-3);
@@ -420,13 +424,10 @@ namespace BlockChain.Application.BlockChain.Service
                             historico.TipoTransacao = "";
 
 
-
-
-                            await this.historicoRepository.Save(historico);
-
-                            carteiras[i].Saldo = saldo;
-                            carteiras[i].DataVerificacao = DateTime.Now.AddHours(-3);
+                            await this.historicoRepository.Save(historico);                            
+                            
                             carteiras[i].Historicos.Add(historico);
+
                             await this.carteiraRepository.Update(carteiras[i]);
 
 
