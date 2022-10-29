@@ -233,8 +233,8 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<string> AtualizarCarteiras()
         {
 
-            float CotacaoMafaDolar = await genericService.BuscarCotacaoMafaDolar();
-            float CotacaoMafaReal = await genericService.BuscarCotacaoMafaReal();
+            float CotacaoMafaDolar = 1; //await genericService.BuscarCotacaoMafaDolar();
+            float CotacaoMafaReal = 1; //await genericService.BuscarCotacaoMafaReal();
             float CotacaoDolar = CotacaoMafaReal / CotacaoMafaDolar;
 
             IList<String> linhasTabela = await genericService.BuscarTabela("https://bscscan.com/token/tokenholderchart/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a?range=500");
