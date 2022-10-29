@@ -98,25 +98,25 @@ namespace BlockChain.Application.BlockChain.Service
             //client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate, br");
             //client.DefaultRequestHeaders.Add("Connection", "keep-alive");
 
-            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "fb87ff96-d4b1-41b6-8487-ce1e2d1f6053");
+            //client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "fb87ff96-d4b1-41b6-8487-ce1e2d1f6053");
 
             float valor = 0;
 
-            HttpResponseMessage response = await client.GetAsync("https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=MAFA&convert=USD");
+            HttpResponseMessage response = await client.GetAsync("https://bscscan.com/token/0x6dd60afb2586d31bf390450adf5e6a9659d48c4a");
             if (response.IsSuccessStatusCode)
             {
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                //var inicio = responseBody.IndexOf("<div class=\"priceValue \">");
+                var inicio = responseBody.IndexOf("Price per Token");
 
-                //responseBody = responseBody.Substring(inicio, 100);
+                responseBody = responseBody.Substring(inicio + 117, 400);
 
-                var inicio = responseBody.IndexOf("\"price\":");
-                var fim = responseBody.IndexOf(",\"volume_24h\"");
+                //inicio = responseBody.IndexOf("<span class=\"text - success\">$");
+                var fim = responseBody.IndexOf(">");
 
-                responseBody = responseBody.Substring(inicio + 8, fim - (inicio + 8));
-                responseBody = responseBody.Substring(0, responseBody.IndexOf(".") + 4);
+                responseBody = responseBody.Substring(0 , fim -1);
+                //responseBody = responseBody.Substring(0, responseBody.IndexOf(".") + 4);
 
 
                 try

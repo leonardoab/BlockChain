@@ -233,7 +233,7 @@ namespace BlockChain.Application.BlockChain.Service
         public async Task<string> AtualizarCarteiras()
         {
 
-            float CotacaoMafaDolar = 1; //await genericService.BuscarCotacaoMafaDolar();
+            float CotacaoMafaDolar = await genericService.BuscarCotacaoMafaDolar();
             float CotacaoMafaReal = 1; //await genericService.BuscarCotacaoMafaReal();
             float CotacaoDolar = CotacaoMafaReal / CotacaoMafaDolar;
 
