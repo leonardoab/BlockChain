@@ -252,6 +252,8 @@ namespace BlockChain.Application.BlockChain.Service
 
                 IList<String> campos = await genericService.ConverterLinhaEmCampos(linhasTabela[i]);
 
+                campos[1] = campos[1].ToLower();
+
                 listaCarteirasAtualizadas.Add(campos[1]);
 
                 var result = carteiras.Where(x => x.CodigoCarteira.Equals(campos[1]));
